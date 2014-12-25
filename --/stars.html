@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <title>Тренажер по схематизации</title>
+    <script src="../lib/loader.js"></script>
+
+    <link type="text/css" rel="stylesheet" media="all" href="../css/sokrat.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="css/buttons.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="../css/slides.css"/>
+
+    <link type="text/css" rel="stylesheet" media="all" href="../css/reset.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="../css/style.css"/>
+
+    <script type="text/javascript">
+
+        initLibraries(["sokrat/interface{.senses,.editor}.js","files/li.js"],
+                function(current,total,filename){
+                    //            document.title = current + " / "+total + "  " + filename;
+                },
+                function(images){
+                    var attrs = getUrlVars(window.location.href);
+                    attrs.test && (API.SETTINGS.test = attrs.test);
+                    attrs.render && (API.SETTINGS.render  = attrs.render);
+
+                    SOKRAT.IMAGES = images;
+                    window.E = new Sokrat("canvas").setScale(1);
+
+
+
+
+                    window.I = Interface;
+                    window.R = E.paper;
+                    Interface.init(E);
+
+                    I.editor = new SokratEditor({
+//                name:100,
+//                category:-50,
+//                difficulty:-50,
+//                scenario:-50,
+//                title:0,
+//                task:0,
+                        interactive:0,
+                        graphs: 0,
+                        labels:0,
+                        process:0,
+                        elements:0,
+                        predefined: 0
+                        //savelist: "div"
+                    });
+
+                    API.levels_full("1001",function(data){
+                        I.levelname = data.id;
+                        I.editor.loadData(data);
+
+
+                        SOKRAT.setSensesFunction(document.getElementById("graph1"),1,1);
+
+                        new Scheme({
+                            data: E.level.graphs[1],
+                            container: "graph1",
+                            width: 40,
+                            active: false,
+                            labels: false,
+                            datasource: E
+                        });
+
+                    });
+                });
+
+    </script>
+</head>
+<body>
+<div id="s_slide_panel" style="right: 0; padding-top: 50px">
+
+
+    <div id="api_editor_buttons" style="margin: 0 50px; position: absolute; top: 0 ">
+        <a class="st-button2" id="api_editor_preview" style="float:left" title="просмотр">view</a>
+        <a class="st-button2" id="api_editor_check" style="float:left" title="проверить">check</a>
+        <!--<a class="st-button2" id="api_editor_save" style="float:right" >save</a>-->
+        <a class="st-button2" id="api_editor_edit" style="float:left">edit</a>
+
+        <select id="api_levels_select" style="height: 28px;margin: 5px;width: 158px;"></select>
+        <!--<a class="st-button2" id="api_editor_add" style="float:right">create</a>-->
+    </div>
+
+    <div id="x-levelTitle" style="font-size: 26px"></div>
+    <div id="x-levelText" style="border: 1px solid #C4C4C4; line-height: 1.5; background: #fff; padding: 5px 10px 5px 10px; text-align: justify;" class="senses"></div>
+    <div id="x-levelGraphs" style="height:70px; width: 100%; border: 1px solid #C4C4C4; background: #fff;"></div>
+
+    <div id="api_results_list" style="height: 570px; overflow: auto; ">
+
+    </div>
+
+
+    <!--Редактор-->
+    <div id="x-editor" style="padding-bottom: 37px;">
+        <div id="api_editor_data" ></div>
+    </div>
+
+</div>
+
+<div style="width:600px; height: 400px; margin: 20px; position:relative;">
+    <!--Канвас-->
+    <div id="canvas" class="paper" style=" width: 100%; height:100%"></div>
+
+    <div id="trash"></div>
+    <div id="graph1" style="padding: 5px;border: 1px dashed grey; background: white; position: absolute; width: 45px; height: 45px; bottom: 20px; right: 20px; border-radius: 40px;"></div>
+</div>
+
+</body>
+
+
+</html>
+
+

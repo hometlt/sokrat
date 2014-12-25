@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="onload">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="../favicon.png">
+    <title>SokratJS - api reference</title>
+    <link rel="stylesheet" href="files/style.css">
+
+    <link rel="stylesheet" media="all" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin,latin-ext">
+
+
+
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.cookie.js"></script>
+    <script src="lib/jquery.history.js"></script>
+    <script src="lib/owl.carousel.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/math.js"></script>
+    <script src="lib/kinetic.js"></script>
+    <script src="lib/prettify.js"></script>
+
+    <script src="../src/sokrat/api.js"></script>
+    <script src="../src/sokrat/scheme.js"></script>
+    <script src="../src/sokrat/sokrat.js"></script>
+    <script src="../src/sokrat/kineticRender.js"></script>
+    <script src="../src/sokrat/interface.editor.js"></script>
+    <script src="../src/sokrat/interface.senses.js"></script>
+    <script src="../src/sokrat/checker.js"></script>
+    <script src="../src/sokrat/chunkManager.js"></script>
+    <script src="../src/sokrat/chunkGraph.js"></script>
+    <script src="../src/sokrat/chunkFunctions.js"></script>
+    <script src="../src/graphs/SokratAreaView.js"></script>
+    <script src="../src/graphs/objects.js"></script>
+    <script src="../src/graphs/area.js"></script>
+    <script src="../src/graphs/line.js"></script>
+    <script src="../src/graphs/block.js"></script>
+    <script src="../src/graphs/balance.js"></script>
+    <script src="../src/graphs/blockarrow.js"></script>
+    <script src="../src/graphs/frame.js"></script>
+    <script src="../src/graphs/position.js"></script>
+    <script src="../src/graphs/situation.js"></script>
+    <script src="../src/graphs/targets.js"></script>
+
+
+    <script src="files/app.js"></script>
+    <script src="files/examples.js"></script>
+</head>
+<body class="inner">
+<div class="bar"></div>
+
+
+<header>
+    <section id="logo">
+        <span class="express">SokratJS<em>0.1</em></span>
+        <span class="description">web application framework for scheme drawing</span>
+    </section>
+    <nav class="clearfix">
+        <a href="index.html" class=""> Home</a>
+        <a href="#" class="active"> Examples</a>
+    </nav>
+</header>
+
+<ul id="menu" class="active">
+    <li id="app-api">
+        <a href="#examples" class="active">Examples</a>
+        <ul id="app-menu" class="active">
+        </ul>
+    </li>
+</ul>
+
+<div id="content">
+
+
+<article id="tasks">
+
+    <h2>Задачи</h2><a id="examples"></a>
+        Далее приведены примеры реализованных задач.
+
+    <section>
+        <h3 id="credit">Кредит</h3>
+        <p>В данной задаче реилзованы связи объектов при помощи соединений-стрелок.</p>
+        <div class="scheme" id="canvas_credit"> </div>
+        <pre  id="code_credit" ></pre>
+    </section>
+
+    <section>
+        <h3 id="speculator">Спекулянт</h3>
+        <p>Релизована связь стрелками различных типов</p>
+        <div class="scheme" id="canvas_speculator"> </div>
+        <pre  id="code_speculator" ></pre>
+    </section>
+
+    <section>
+        <h3 id="myth">Миф</h3>
+        <p>Использование графемы "ситуация" и "рефлексивная позиция".</p>
+        <div class="scheme" id="canvas_myth"> </div>
+        <pre  id="code_myth" ></pre>
+    </section>
+
+    <section>
+        <h3 id="business">Свой бизнес</h3>
+        <p>Использование функции <code>dist()</code> для определения расстояния от концов стрелки до предпринимателя</p>
+        <div class="scheme" id="canvas_business"> </div>
+        <pre  id="code_business" ></pre>
+    </section>
+
+    <section>
+        <h3 id="tigers">Тигры</h3>
+        <div class="scheme" id="canvas_tigers"> </div>
+        <pre  id="code_tigers" ></pre>
+    </section>
+
+    <section>
+        <h3 id="university">Университет</h3>
+        <p>Проверка, что все модули программы связаны друг с другом.</p>
+        <div class="scheme" id="canvas_university"> </div>
+        <pre  id="code_university" ></pre>
+    </section>
+
+    <section>
+        <h3 id="soul">Души</h3>
+        <p>Использование графемы- фокуса. Прикрепление позиции к фокусу.</p>
+        <div class="scheme" id="canvas_soul"> </div>
+        <pre  id="code_soul" ></pre>
+    </section>
+
+    <!--<section>-->
+        <!--<h3 id="dog">Собака</h3>-->
+        <!--<div class="scheme" id="canvas_dog"> </div>-->
+        <!--<pre  id="code_dog" ></pre>-->
+    <!--</section>-->
+
+    <section>
+        <h3 id="siedge">Баланс</h3>
+        <p>Базовая структура - принцип баланса.</p>
+        <div class="scheme" id="canvas_siedge"> </div>
+        <pre  id="code_siedge" ></pre>
+    </section>
+
+    <!--<section>-->
+        <!--<h3 id="banks">Банки</h3>-->
+        <!--<div class="scheme" id="canvas_banks"> </div>-->
+        <!--<pre  id="code_banks" ></pre>-->
+    <!--</section>-->
+
+    <section>
+        <h3 id="sokrat">Сократ</h3>
+        <p>Использование графемы "область". Рассчет и сравнение площадей областей на схеме. пример использования функции <code>set()</code> </p>
+        <div class="scheme" id="canvas_sokrat"> </div>
+        <pre  id="code_sokrat" ></pre>
+    </section>
+
+    <section>
+        <h3 id="eastwest">Восток - запад</h3>
+        <p>Пример использования именованых портов. Действия "атака" и "Ложные действия" должны быть приложены к разным граням объекта "Враг" </p>
+        <div class="scheme" id="canvas_eastwest"> </div>
+        <pre  id="code_eastwest" ></pre>
+    </section>
+
+    <!--<section>-->
+        <!--<h3 id="thedog">Собака</h3>-->
+        <!--<div class="scheme" id="canvas_thedog"> </div>-->
+        <!--<pre  id="code_thedog" ></pre>-->
+    <!--</section>-->
+
+    <section>
+        <h3 id="commerce">Торговля</h3>
+        <p>Пример применения функции  <code>sections()</code>, позволяющей определить, в каких границах лежат разные организации</p>
+        <div class="scheme" id="canvas_commerce"> </div>
+        <pre  id="code_commerce" ></pre>
+    </section>
+
+    <section>
+        <h3 id="bridge">Мостки</h3>
+        <p>пример использования свойства <code>len</code> у графемы <code>Arrow</code> для последовательного соединения графем и областей. </p>
+        <div class="scheme" id="canvas_bridge"> </div>
+        <pre  id="code_bridge" ></pre>
+    </section>
+
+    <section>
+        <h3 id="focus">оброзовательная программа</h3>
+        <p>Задача с применением рамок и фокусов</p>
+        <div class="scheme" id="canvas_focus"> </div>
+        <pre  id="code_focus" ></pre>
+    </section>
+
+
+    <!--<section>-->
+        <!--<h3 id="tabacco">Табак</h3>-->
+        <!--<p>Разбиение схемы на две части с помощью неактивной линии-разделителя. Пример использование относительных координат и свойства <code>active</code> </p>-->
+        <!--<div class="scheme" id="canvas_tabacco"> </div>-->
+        <!--<pre  id="code_tabacco" ></pre>-->
+    <!--</section>-->
+
+    <section>
+        <h3 id="edu3">Траектории образования</h3>
+        <p>Пример использования рекурсивного алгоритма на схеме</p>
+        <div class="scheme" id="canvas_edu3"> </div>
+        <pre  id="code_edu3" ></pre>
+    </section>
+
+</article>
+
+<a id="top" href="#"><img src="files/arrow.png"></a>
+
+<footer>
+    <div id="footer-content">© Denis Ponomarev</div>
+</footer>
+
+</div>
+
+</body></html>

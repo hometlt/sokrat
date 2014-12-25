@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="onload">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="../favicon.png">
+    <title>SokratJS</title>
+    <link rel="stylesheet" href="files/style.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin,latin-ext">
+
+
+    <link rel="stylesheet" media="all" href="css/bootstrap.css"/>
+    <link href="css/owl.carousel.css" rel="stylesheet">
+    <link href="css/owl.theme.css" rel="stylesheet">
+    <!--<link type="text/css" rel="stylesheet" media="all" href="css/reset.css"/>-->
+    <link type="text/css" rel="stylesheet" media="all" href="css/page.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="css/prettyprint.css"/>
+
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.cookie.js"></script>
+    <script src="lib/jquery.history.js"></script>
+    <script src="lib/owl.carousel.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/math.js"></script>
+    <script src="lib/kinetic.js"></script>
+    <script src="lib/prettify.js"></script>
+
+    <script src="files/li.js"></script>
+
+    <script src="../src/sokrat/api.js"></script>
+    <script src="../src/sokrat/scheme.js"></script>
+    <script src="../src/sokrat/sokrat.js"></script>
+    <script src="../src/sokrat/kineticRender.js"></script>
+    <script src="../src/sokrat/interface.editor.js"></script>
+    <script src="../src/sokrat/interface.senses.js"></script>
+    <script src="../src/sokrat/checker.js"></script>
+    <script src="../src/sokrat/chunkManager.js"></script>
+    <script src="../src/sokrat/chunkGraph.js"></script>
+    <script src="../src/sokrat/chunkFunctions.js"></script>
+    <script src="../src/graphs/SokratAreaView.js"></script>
+    <script src="../src/graphs/objects.js"></script>
+    <script src="../src/graphs/area.js"></script>
+    <script src="../src/graphs/line.js"></script>
+    <script src="../src/graphs/block.js"></script>
+    <script src="../src/graphs/balance.js"></script>
+    <script src="../src/graphs/blockarrow.js"></script>
+    <script src="../src/graphs/frame.js"></script>
+    <script src="../src/graphs/position.js"></script>
+    <script src="../src/graphs/situation.js"></script>
+    <script src="../src/graphs/targets.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            window.onload = function(){
+                $('#myTab a').click(function (e) {
+                    e.preventDefault();
+                    $(this).tab('show');
+                });
+                $('#myTab a:first').tab('show');
+
+                $(".s_slide_panel .trigger").click(function(){$(this).parents(".s_slide_panel").toggleClass("closed")})
+            }
+        });
+
+    </script>
+</head>
+<body class="inner">
+<div class="bar"></div>
+
+
+<header>
+    <section id="logo">
+        <span class="express">SokratJS<em>0.1</em></span>
+        <span class="description">web application framework for scheme drawing</span>
+    </section>
+    <nav class="clearfix">
+        <a href="#" class="active"> Home</a>
+        <a href="examples.html"> Examples</a>
+    </nav>
+</header>
+
+
+<h1>SokratJS</h1>
+Библиотека, позволит вам работать с интерактивной инфографикой на любом вебсайте.<br/>
+Библиотека использует KineticJS в качетве графического движка.
+
+<div class="paper-outer">
+    <div id="canvas1" class="paper" style="height: 298px; width: 800px"></div>
+    <div class="s_slide_panel closed">
+        <div class="trigger"></div>
+        <pre id="canvas1-code" class="prettyprint"></pre>
+    </div>
+</div>
+<script src="files/example1.js"></script>
+
+
+
+<h2>Стилизация графем</h2>
+<div class="paper-outer">
+    <div id="canvas2" class="paper" style="height: 200px; width: 800px"></div>
+    <div class="s_slide_panel closed">
+        <div class="trigger"></div>
+        <pre id="canvas2-code"></pre>
+    </div>
+</div>
+<script src="files/example2.js"></script>
+
+
+<h2>Создание элементов управления схемой</h2>
+С помощью функции <code>SOKRAT.setSensesFunction(sokrat, object,{graph: template})</code> можно создавать новые графемы при нажатии на любой объект.<br/>
+С помощью статических изображний <code>Scheme()</code> можно создавать миниатюры графем на таких объектов.
+<div class="paper-outer" id="canvas3-container">
+    <div id="canvas3" class="paper" style="height: 400px; width: 800px"></div>
+    <div class="trash" data-action="delete"></div>
+    <div class="task-description">
+        <span>Перетащите с панели 3 элемента одного типа.</span><br/>
+        <span>Используется проверка <code>
+            <span title="запоминаем тип элемента в переменную 'D'">.D</span>
+            <span title="проверяем условие, что графе такого же типа на схеме 3 или более">
+                len(<span title="отбираем все элементы на схеме и отбираем из них те, что принадлежат типу 'D'">* .D</span>
+                 ,<span title="3 или более">3:</span>)
+            </span></code></span>
+
+        <!--Схема проверятесяпосле изменения состояния любой графемы.<br/>-->
+        <!--Для проверки состояния графем используется инструкция.<br/>-->
+        <!--Когда на форму будет установлено 3 графемы любого типа, сработает инструкция "G".<br/>-->
+        <!--Задача будет считаться выполненной-->
+    </div>
+    <div class="buttons">
+        <div data-graph="1" ></div>
+        <div data-graph="2" ></div>
+        <div data-graph="3" ></div>
+        <div data-graph="4" ></div>
+        <div data-graph="5" ></div>
+        <div data-graph="6" ></div>
+    </div>
+    <div class="s_slide_panel closed">
+        <div class="trigger"></div>
+        <pre id="canvas3-code"></pre>
+    </div>
+</div>
+<h2>проверка состояние схемы</h2>
+Можно устанавливать обработчики на любое событие на схеме. например, проверять корректность схемы при каждо ее изменении. Для этого необходимо инийиализировать функцию <code>onChange</code>.<br/>
+Для проверки корректности схемы используется функция <code>CheckOut</code>, параметром которой является набор правил проверки схемы.<br/>
+<!--В задании приведенном выше используютя два правила. При наведении мышью на отдельные элементы фраментов кода, будут всплывать подсказки.-->
+<code><pre>sokrat.onChange = function(){
+  var data = canvas.checkOut(rules);
+  if(data.values.status == 100)callback();
+};</pre></code>
+<script src="files/example3.js"></script>
+
+
+
+<h2>Управленческие задачи</h2>
+С помощью библиотеки было создано нескольо управленческих задач - тестов.
+Выберите задачу  , следуйте инструкиция<br/>
+
+<div id="utasks" class="owl-carousel"></div>
+
+<div class="paper-outer" style="">
+    <div id="canvas" class="paper" style="height: 500px"></div>
+    <div class="s_slide_panel closed">
+        <div class="trigger"></div>
+        <div id="x-levelTitle" style="font-size: 26px"></div>
+        <div id="x-levelText" style="border: 1px solid #C4C4C4; line-height: 1.5; background: #fff; padding: 5px 10px 5px 10px; text-align: justify;" class="senses"></div>
+        <div id="x-levelGraphs" style="height:70px; width: 100%; border: 1px solid #C4C4C4; background: #fff;"></div>
+    </div>
+</div>
+
+<div id="api_editor_buttons">
+    <a class="btn btn-primary" id="api_editor_preview" title="просмотр">view</a>
+    <a class="btn btn-primary" id="api_editor_check" title="проверить">check</a>
+    <a class="btn btn-primary" id="api_editor_save" style="float:right" >save</a>
+    <a class="btn btn-primary" id="api_editor_edit">edit</a>
+    <!--<select id="api_levels_select"></select>-->
+    <!--<a class="st-button2" id="api_editor_add" style="float:right">create</a>-->
+</div>
+<ul class="nav nav-tabs" id="myTab">
+    <li><a href="#messages">Результаты</a></li>
+    <li><a href="#settings">Описание</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane" id="messages">
+        <div id="api_results_list" style="height: 570px; overflow: auto; -webkit-columns: 3"> </div>
+    </div>
+    <div class="tab-pane" id="settings">
+        <div id="x-editor" style="padding-bottom: 37px;-webkit-columns: 2">
+            <div id="api_editor_data" ></div>
+        </div>
+    </div>
+</div>
+<script src="files/example4.js"></script>
+
+</body>
+
+
+</html>
+
+

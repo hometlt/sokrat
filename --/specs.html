@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://slides.html5rocks.com/#table-of-contents -->
+<html manifest="cache.appcache" class=" transition">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>HTML5 Presentation</title>
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" />
+
+    <link href="../css/slides.css" rel="stylesheet" type="text/css">
+
+    <script src="../lib/loader.js"></script>
+
+    <script type="text/javascript">
+    window.VERSION = 1;
+
+    initLibraries("",
+//обратная связь, нужна для разработки loaderа
+            function(current,total,filename){
+//            document.title = current + " / "+total + "  " + filename;
+            },
+            function(images){
+
+
+            });
+
+    </script>
+
+
+</head>
+<body>
+<article>
+    <h1>Библиотека SokratJS</h1>
+    <p> фреймворк тренажера по схематизации.</p>
+    <p> Пономарев Д.</p>
+    <p> August 27, 2012 </p>
+</article>
+
+
+
+<article>
+    <h3>Слайды</h3>
+    <div id="maintenance">
+    </div>
+</article>
+
+
+<article alt='Скриншоты' id="screens">
+    <p> May, 2012 </p>
+    <img src="img/screenshots/sokrat1.png" width="250px"/>
+    <img src="img/screenshots/sokrat1_2.png" width="250px"/>
+    <img src="img/screenshots/sokrat1_3.png" width="250px"/>
+    <p> July, 2012 </p>
+    <img src="img/screenshots/sokrat2_1.png" width="250px"/>
+    <img src="img/screenshots/sokrat2_2.png" width="250px"/>
+    <img src="img/screenshots/sokrat2_3.png" width="250px"/>
+    <p> August, 2012 </p>
+    <img src="img/screenshots/sokrat3_1.png" width="250px"/>
+</article>
+
+
+<article alt='Создание объекта Сократ' class='smaller' id='sokrat'>
+    <p> С помощью библиотеки SokratJS можно создавать как интерактивные схемы так и статические SVG изображения.</p>
+        <pre>
+&lt;script type='text/javascript' src='sokrat.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript'&gt;
+    //Создание движка (интерактивная схема)
+    var engine = new Sokrat("canvas");
+    //new Sokrat(container).load(data||data_url).check(rules||check_url);
+
+    //Создание пользовательского интерфейса
+    new Interface(engine).openMenu();
+    //new Interface(engine,STATUS.MENU); // фаза меню
+
+    //Статические графемы
+    var R = new Raphael (container, 50, 50);
+    Graph(type,name).createGraphElement(R).setLayer(R.group().scale(0.5));
+    //new Scheme(data, container,width,height,scale);
+&lt;/script&gt;
+</pre>
+</article>
+
+<article alt='Основные классы' id='classes' class="sokrat_classes" >
+    <p><code>Graph</code> Графема</p>
+    <p><code>Scheme</code> Статичная схема</p>
+    <p><code>Sokrat</code> Интерактивная схема</p>
+    <p><code>Checker</code> Проверка решения</p>
+    <p><code>Level</code> Задача</p>
+    <p><code>Interface</code> Интерфейс</p>
+</article>
+
+
+<article class='smaller' alt='Подключение скрипта' id='begin'>
+    Необходимо подключить билиотеку для работы с SVG.
+    <pre>&lt;script type='text/javascript' src='raphael.js'&gt;&lt;/script&gt;</pre>
+    Для создания интерфейса и работы с DOM используется jQuery
+    <pre>&lt;script type='text/javascript' src='jquery.js'&gt;&lt;/script&gt;</pre>
+    Для начала работы необходимо подключить основную библиотеку
+    <pre>&lt;script type='text/javascript' src='sokrat.js'&gt;&lt;/script&gt;</pre>
+</article>
+
+<article alt='Статические схемы' id='scheme' class='smaller'>
+    <p>Создание объекта Схемы используя функция <code>Scheme</code></p>
+    <p>Данные для схемы передаются в формате json</p>
+        <pre style="width:610px; float: left" >
+&lt;script&gt;
+    var json = [{graph: "block"},{graph: "block",c:[30,50]}];
+//Создать схему внутри контейнера
+    Scheme({
+        data: json,
+        container: "test-scheme",
+        width: 80,
+        scale: 0.8
+    })
+//Создать элемент со схемой
+    document.body.appendChild(Scheme(json,width,height,scale));
+&lt;/script&gt;
+</pre>
+    <scheme id="test-scheme" style="margin:20px; float: right"></scheme>
+    <hr style="clear:both"/>
+    <p>Альтернативный способ: использовать специальный тег</p>
+<pre  style="width:610px; float: left">
+&lt;scheme scale=0.8&gt;
+    {graph: "arrow" , "c":[50,50]},
+    {graph: "arrow" , "c":[40,60]},
+    {graph: "arrow" , "c":[60,40]}
+&lt;/scheme&gt;
+</pre>
+    <scheme scale=0.8>
+        {graph: "arrow" , "c":[50,50]},
+        {graph: "arrow" , "c":[40,60]},
+        {graph: "arrow" , "c":[60,40]}
+    </scheme>
+</article>
+
+
+<article alt='Язык описания схем JSON' class='smaller examples' id='scheme_language'>
+    <table >
+        <tr><th>Параметр</th><th> описание</th></tr>
+        <tr><td><code>graph</code></td><td> Тип графемы</td></tr>
+        <tr><td><code>label</code></td><td> Метка графемы (текст)</td></tr>
+        <tr><td><code>name</code></td><td> Имя графемы (для интерактивных схем)</td></tr>
+        <tr><td><code>c</code></td><td> Центр графемы</td></tr>
+    </table>
+
+
+
+
+
+
+
+    <hr style="clear:both"/>
+
+    <!--массивы элементов-->
+    <p>Для описания динамических элементов(способных иметь разное количество экземпляров) используются массивы.</p>
+    <p>Например описание вершин "Сложной стрелки"<code>HardArrow</code></p>
+    <pre>{graph: "arrow",middle: 3,"ps":[[70,40],[90,70],[70,120]],"pt":[10,10]}</pre>
+    <scheme id="sch1">{graph: "arrow",middle: 3,"ps":[[70,40],[90,70],[70,120]],"pt":[10,10]}</scheme>
+    <p>Перечисление меток графемы "Шаг развития"</p>
+    <pre>{graph: "targets",  labels : ["A","B","C","D","E"],size:70}</pre>
+    <scheme>{graph: "targets",  labels : ["A","B","C","D","E"],size:70}</scheme>
+
+    <hr/>
+
+
+    <!--свойства передаваемые как тип-->
+    <p>В качестве типа можно передать свойство объекта, в таком случае значение свойства указывается перед его именем</p>
+    <p>Могут существовать параметры по умоляанию, например что бы задать количество промежуточных точек у линии</p>
+    <pre>"arrow-curve-3middle"</pre>
+    <scheme>arrow-3-curve</scheme>
+    <pre>"arrow-curve-3"</pre>
+    <hr/>
+
+    <!--параметр attrs-->
+    <p>Для изменения отдельных атрибутов графемы можно использовать параметр <code>attrs</code>.<br/>
+        Формат параметра <code>attrs-&lt;shape&gt; : {attributes} </code><br/>
+        где shape - идентификатор объекта графемы</p>
+    <pre>{graph: "focus", "attrs-block": {fill:red}, label:"focus\none" }</pre>
+    <scheme>{graph: "focus", "attrs-block": {"fill": "red"}, label:"focus\none"}</scheme>
+    <hr/>
+
+    <!--параметры-->
+    <p>Также, каждая графема имеет собственный набор параметров.<br/>
+        например степень рефлексии у графемы "Позиция" <code>position</code></p>
+    <pre>{graph: "position", reflex:2, }</pre>
+    <scheme>{graph: "position", reflex:2}</scheme>
+    <p>Включить дополнительные порты у блочных элементов</p>
+    <pre>{graph: "block",  ports : true}</pre>
+    <hr/>
+
+    <!--типы графемы-->
+    <p>Некоторые параметры могут иметь несколько значений, такие значения перечисляются через дефис "-"<br/>  например тип графемы "Линия"<code>position</code></p>
+    <pre>{graph: "arrow",type: "object-double-dashed"}</pre>
+    <scheme>line-object-double-dashed</scheme>
+    <pre>{graph: "arrow-object-double-dashed"}</pre>
+    <pre>"arrow-object-double-dashed"</pre>
+    <hr/>
+
+    <!--тег shape-->
+    <p>Для рисования нативной векторной графики    тег <code>shape</code>
+        подробная инструкция по типам объектов и аттрибутов на сайте <a href="http://raphaeljs.com">http://raphaeljs.com</a></p>
+
+
+
+    <pre>
+{shape: "path",fill:"#f89938",stroke:"none",path:"M49.973,94.128C44.760999999999996,94.128,39.86,92.099,36.174,88.411L11.424,63.661C7.734,59.976,5.701,55.074,5.701,49.859C5.701,44.643,7.734,39.74,11.425,36.053000000000004L36.175,11.304000000000006C39.861,7.617000000000006,44.76,5.589000000000006,49.973,5.589000000000006C55.185,5.589000000000006,60.086,7.617000000000006,63.772999999999996,11.303000000000006L88.52199999999999,36.05500000000001C92.21199999999999,39.73800000000001,94.24699999999999,44.641000000000005,94.24699999999999,49.858000000000004C94.24699999999999,55.075,92.21299999999998,59.977000000000004,88.52099999999999,63.663000000000004L63.772,88.411C60.086,92.099,55.185,94.128,49.973,94.128L49.973,94.128Z"},
+{shape: "path",fill:"#3399ff",stroke:"none" , path:"M33.014,23.398C33.014,14.032,40.607,6.439,49.973,6.439C59.34,6.439,66.932,14.032,66.932,23.398C66.932,32.765,59.34,40.357,49.973,40.357C40.606,40.358,33.014,32.765,33.014,23.398"},
+{shape: "path",fill:"#333333",stroke:"none",path: "M93.816,61.314C96.046,57.943,97.24600000000001,53.994,97.24600000000001,49.859C97.24600000000001,44.288000000000004,95.07400000000001,39.053000000000004,91.13400000000001,35.121L64.707,8.691L64.69699999999999,8.701C60.92599999999999,4.924,55.71799999999999,2.5840000000000005,49.97199999999999,2.5840000000000005S39.019,4.925,35.249,8.702L35.24,8.692L8.813,35.118C4.872000000000001,39.055,2.7010000000000005,44.290000000000006,2.7010000000000005,49.859C2.7010000000000005,55.427,4.871,60.662000000000006,8.811,64.596L32.64,88.42500000000001C33.595,89.49700000000001,34.599000000000004,90.50000000000001,35.657000000000004,91.42200000000001C39.542,95.10300000000001,44.6,97.12700000000001,49.972,97.12700000000001C55.537,97.12700000000001,60.771,94.96000000000001,64.706,91.02300000000001L90.416,65.31400000000001C90.481,65.25000000000001,90.54599999999999,65.18400000000001,90.61099999999999,65.11900000000001L91.13199999999999,64.59900000000002C92.12499999999999,63.60800000000002,93.005,62.533000000000015,93.767,61.39200000000002C93.785,61.36700000000002,93.804,61.34300000000002,93.823,61.31800000000002L93.816,61.314ZM89.535,49.859C89.535,52.451,88.783,54.925000000000004,87.39099999999999,57.043C86.556,58.183,85.68499999999999,59.179,84.78699999999999,60.04L84.723,60.104C80.496,64.125,75.72,65.264,71.667,65.264C69.437,65.264,67.424,64.91799999999999,65.842,64.51899999999999C56.579,62.17899999999999,46.51,54.20799999999999,41.902,42.58299999999999C44.385,43.63199999999999,47.112,44.21199999999999,49.972,44.21199999999999C60.719,44.21199999999999,69.588,36.02499999999999,70.674,25.56199999999999L85.683,40.56999999999999C88.167,43.053,89.535,46.351,89.535,49.859ZM49.973,10.294C57.2,10.294,63.077,16.173000000000002,63.077,23.398C63.077,30.624,57.199,36.503,49.973,36.503C42.748,36.503,36.87,30.624000000000002,36.87,23.398C36.87,16.173,42.748,10.294,49.973,10.294ZM14.262,59.146C11.779,56.665,10.411000000000001,53.367000000000004,10.411000000000001,49.86C10.411000000000001,46.352,11.778000000000002,43.054,14.261000000000001,40.574L24.415,30.418999999999997C21.765,39.440999999999995,20.627,48.934999999999995,21.237,58.036C21.456,61.307,21.907999999999998,64.44500000000001,22.558,67.44L14.262,59.146ZM31.621,33.206C33.851,50.655,47.663,67.878,63.95399999999999,71.995C66.60799999999999,72.665,69.21,72.995,71.72699999999999,72.995C71.76299999999999,72.995,71.79999999999998,72.992,71.83599999999998,72.992L59.255999999999986,85.57300000000001C56.774999999999984,88.052,53.47799999999999,89.418,49.97199999999999,89.418C47.530999999999985,89.418,45.198999999999984,88.742,43.16699999999999,87.504L43.170999999999985,87.497C42.37099999999999,86.967,41.60899999999999,86.368,40.86799999999999,85.734C40.80999999999999,85.67699999999999,40.74799999999999,85.63,40.69099999999999,85.573L38.14899999999999,83.03099999999999C32.92199999999998,77.02999999999999,29.634999999999987,68.101,28.927999999999987,57.52099999999999C28.393,49.515,29.354,41.167,31.621,33.206"}
+    </pre>
+
+    <scheme>
+        {shape: "path",fill:"#f89938",stroke:"none",path:"M49.973,94.128C44.760999999999996,94.128,39.86,92.099,36.174,88.411L11.424,63.661C7.734,59.976,5.701,55.074,5.701,49.859C5.701,44.643,7.734,39.74,11.425,36.053000000000004L36.175,11.304000000000006C39.861,7.617000000000006,44.76,5.589000000000006,49.973,5.589000000000006C55.185,5.589000000000006,60.086,7.617000000000006,63.772999999999996,11.303000000000006L88.52199999999999,36.05500000000001C92.21199999999999,39.73800000000001,94.24699999999999,44.641000000000005,94.24699999999999,49.858000000000004C94.24699999999999,55.075,92.21299999999998,59.977000000000004,88.52099999999999,63.663000000000004L63.772,88.411C60.086,92.099,55.185,94.128,49.973,94.128L49.973,94.128Z"},
+        {shape: "path",fill:"#3399ff",stroke:"none" , path:"M33.014,23.398C33.014,14.032,40.607,6.439,49.973,6.439C59.34,6.439,66.932,14.032,66.932,23.398C66.932,32.765,59.34,40.357,49.973,40.357C40.606,40.358,33.014,32.765,33.014,23.398"},
+        {shape: "path",fill:"#333333",stroke:"none",path: "M93.816,61.314C96.046,57.943,97.24600000000001,53.994,97.24600000000001,49.859C97.24600000000001,44.288000000000004,95.07400000000001,39.053000000000004,91.13400000000001,35.121L64.707,8.691L64.69699999999999,8.701C60.92599999999999,4.924,55.71799999999999,2.5840000000000005,49.97199999999999,2.5840000000000005S39.019,4.925,35.249,8.702L35.24,8.692L8.813,35.118C4.872000000000001,39.055,2.7010000000000005,44.290000000000006,2.7010000000000005,49.859C2.7010000000000005,55.427,4.871,60.662000000000006,8.811,64.596L32.64,88.42500000000001C33.595,89.49700000000001,34.599000000000004,90.50000000000001,35.657000000000004,91.42200000000001C39.542,95.10300000000001,44.6,97.12700000000001,49.972,97.12700000000001C55.537,97.12700000000001,60.771,94.96000000000001,64.706,91.02300000000001L90.416,65.31400000000001C90.481,65.25000000000001,90.54599999999999,65.18400000000001,90.61099999999999,65.11900000000001L91.13199999999999,64.59900000000002C92.12499999999999,63.60800000000002,93.005,62.533000000000015,93.767,61.39200000000002C93.785,61.36700000000002,93.804,61.34300000000002,93.823,61.31800000000002L93.816,61.314ZM89.535,49.859C89.535,52.451,88.783,54.925000000000004,87.39099999999999,57.043C86.556,58.183,85.68499999999999,59.179,84.78699999999999,60.04L84.723,60.104C80.496,64.125,75.72,65.264,71.667,65.264C69.437,65.264,67.424,64.91799999999999,65.842,64.51899999999999C56.579,62.17899999999999,46.51,54.20799999999999,41.902,42.58299999999999C44.385,43.63199999999999,47.112,44.21199999999999,49.972,44.21199999999999C60.719,44.21199999999999,69.588,36.02499999999999,70.674,25.56199999999999L85.683,40.56999999999999C88.167,43.053,89.535,46.351,89.535,49.859ZM49.973,10.294C57.2,10.294,63.077,16.173000000000002,63.077,23.398C63.077,30.624,57.199,36.503,49.973,36.503C42.748,36.503,36.87,30.624000000000002,36.87,23.398C36.87,16.173,42.748,10.294,49.973,10.294ZM14.262,59.146C11.779,56.665,10.411000000000001,53.367000000000004,10.411000000000001,49.86C10.411000000000001,46.352,11.778000000000002,43.054,14.261000000000001,40.574L24.415,30.418999999999997C21.765,39.440999999999995,20.627,48.934999999999995,21.237,58.036C21.456,61.307,21.907999999999998,64.44500000000001,22.558,67.44L14.262,59.146ZM31.621,33.206C33.851,50.655,47.663,67.878,63.95399999999999,71.995C66.60799999999999,72.665,69.21,72.995,71.72699999999999,72.995C71.76299999999999,72.995,71.79999999999998,72.992,71.83599999999998,72.992L59.255999999999986,85.57300000000001C56.774999999999984,88.052,53.47799999999999,89.418,49.97199999999999,89.418C47.530999999999985,89.418,45.198999999999984,88.742,43.16699999999999,87.504L43.170999999999985,87.497C42.37099999999999,86.967,41.60899999999999,86.368,40.86799999999999,85.734C40.80999999999999,85.67699999999999,40.74799999999999,85.63,40.69099999999999,85.573L38.14899999999999,83.03099999999999C32.92199999999998,77.02999999999999,29.634999999999987,68.101,28.927999999999987,57.52099999999999C28.393,49.515,29.354,41.167,31.621,33.206"}
+    </scheme>
+
+    <p>содержит некоторые дополнительные фигуры, например "человек"</p>
+    <pre>{shape: "man",fill:"green",stroke:'white','stroke-width':3}</pre>
+    <scheme>{shape: "man",fill:"green",stroke:'white','stroke-width':3}</scheme>
+    <p>аттрибут <code>layer</code> определяет уровень стека элемента</p>
+    <pre>{shape: "rect",width: 80, height:80, fill:"blue",layer:1},
+{shape: "circle",r: 30,fill:"yellow",layer:2}</pre>
+    <scheme>
+{shape: "rect",width: 80, height:80, fill:"blue",layer:1},
+{shape: "circle",r: 30,fill:"yellow",layer:2}
+    </scheme>
+    <hr/>
+
+    <!--тег load-->
+    <p>тег <code>load</code> позволяет загружать уровни с сервера<br/></p>
+    <pre>{load: "levels/a_diller.lvl"}</pre>
+    <scheme>{load: "levels/a_diller.lvl"}</scheme>
+    <hr/>
+
+
+</article>
+
+
+<article alt='Графемы' class="sokrat_classes" id='graphs'>
+    <h3>  </h3>
+    <p><code>Area</code></p>
+    <p><code>Balance</code></p>
+    <p><code>Block</code> + SenseFocus ParaBlock Ellipse</p>
+    <p><code>BlockArrow</code></p>
+    <p><code>Frame</code></p>
+    <p><code>HardArrow</code></p>
+    <p><code>Line</code> + Arrows</p>
+    <p><code>Frame</code></p>
+    <p><code>LineSeparator</code></p>
+    <p><code>Resizable</code></p>
+    <p><code>Situation</code></p>
+    <p><code>Targets</code></p>
+    <p><code>Position</code>+ FuncPosition</p>
+    <p><code>Targets</code></p>
+    <p><code class="red">ToDo: Image</code></p>
+    <p><code class="red">ToDo: Comment</code></p>
+</article>
+
+
+<article  alt='класс графемы Graph' class='smaller' id='graphobject'>
+    <table>
+        <tr><td><code>new GraphObject(options,name)</code></td><td></td></tr>
+        <tr><td><code>intersect(object,graph)</code></td><td></td></tr>
+        <tr><td><code>_update_graph()</code></td><td></td></tr>
+        <tr><td><code>getLabel()</code></td><td></td></tr>
+        <tr><td><code>updateLabel()</code></td><td></td></tr>
+        <tr><td><code>updateConnection()</code></td><td></td></tr>
+        <tr><td><code>unselect()</code></td><td></td></tr>
+        <tr><td><code>select()</code></td><td></td></tr>
+        <tr><td><code>destroy()</code></td><td></td></tr>
+        <tr><td><code>createGraphElement(paper)</code></td><td></td></tr>
+        <tr><td><code>setLayer(layerNumber)</code></td><td></td></tr>
+        <tr><td><code>addObject(group, index)</code></td><td></td></tr>
+        <tr><td><code>setDraggable(shape,sdata,data)</code></td><td></td></tr>
+        <tr><td><code>setParameter(shape, property,value)</code></td><td></td></tr>
+    </table>
+</article>
+
+
+<article alt='Язык описания расширения графем' class='smaller' id='graphext'>
+    <h3><span class="red"> TODO:</span>GraphExt</h3>
+<pre>
+SokratFrame ={
+    super: SokratLine,
+    defaults: {
+        c: [0,0],
+        l:150,
+        p1: [-30,-30],
+        p2: [30,30],
+        pt: [0,0]
+    },
+    data: {
+        drag3: {CREATE: SH.RECT , DRAG:p.c , ATTRS: [CSS.INV,{height:20}]},
+        drag4: {CREATE: SH.RECT , DRAG: function(x,y){p.l = Math.distanceToLine(p.p1[0]+ p.c[0],p.p1[1]+ p.c[1],p.p2[0]+ p.c[0],p.p2[1]+ p.c[1],event.x,event.y); } ,
+            ATTRS: [CSS.INV,{height:20}]},
+        line:  {CREATE: SH.PATH, ATTRS: CSS.LINE, DRAG: p.c },
+        field: {CREATE: SH.PATH, ATTRS: CSS.EASY , CONNECTOR: 1}
+    }
+}
+</pre>
+</article>
+
+
+<article alt='Язык описания задач' class='smaller' id='levels'>
+    <h3><span class="red"> TODO:</span>levels </h3>
+<pre>
+    interactive:[
+        "Описание ситуации:",
+        "{1 Дилер} осуществляет следующие действия:",
+TODO:   "{List (элемент 1,элемент 2,элемент 3)}",
+TODO:   "{Image (url)}"
+    ],
+
+    rules: {
+        0: {count: "1:3",lower: "нет лишних графем", matched: "W:есть лишние графемы",over: "E:много лишних графем"},
+
+        1: {l:"Дилер",g:1,
+        error:"E: дилер - позиция", lower:"E:нет дилера", over:"E:много дилеров",matched:"дилер верно"},
+
+        2: {l:"Рынк валюты А",g:2},
+
+        3: {l:"а1", g:3 , p:3, cns: [
+        {/*id: 666, u:1,*/ c:{1:2, 2:1} , e: "E:Соедините блоки a1", o: "W:Слишком много соединений", m: "a1 соединен верно"},
+        {c:{1:1,2:4}, e: "E: a2"}]},
+
+        4: {l:"спотовом рынке валют", g:2},
+
+        5: {l:"b",g:3,cns: [
+        {a: "A", c: {1:1,2:6}, e: "E: нет соединения b дилер - рынок валюты"},
+        {a: "B", c: {1:4,2:1}, e: "E: нет соединения b дилер - спотовый рынок валют"}]},
+
+        6: {l:"рынок валюты В",g:2 },
+
+        7: {l:"рынок форвардных контрактов",g:2},
+
+        8: {l:"форвардный контракт",g:4,
+        c:{0:[7,1]} ,   e: "E: форвардный контракт"},
+
+        9: {l:"b+db",g: 5,
+        c: {1:6,2:1} ,  e: "E: b+db"},
+
+        10: {l: "форвард b+db ", g: 6,
+        c:{0:[1,4]} ,   e: "E:форвард b+db"},
+
+        11: {l:"а1+da",g:5,
+        c: {1:1,2:2},   e: "E: а1+da" }
+
+    },
+
+    graphs :{
+        1: "position",
+        2: "parablock",
+        3: "objectarrow",
+        4: "doublearrow",
+        5: {graph: "objectarrow",type: "dashed"},
+        6: {graph: "objectarrow",type: "double-dashed"},
+        7: {graph: "objectarrow",type: "double"},
+        8: "focus"
+    },
+
+    info: function(gs,rc,cc){
+        for(var check in cc){
+            for(var i=0;i&lt;cc[check].length;i++){
+                var p = gs[cc[check][i]][2];
+                p.square = (-p.x + p.w) * (-p.y + p.h);
+            }
+        }
+        return {}
+    },
+
+    messages:{
+
+        1:  ['!#*','E:неправильно установлены элементы', 'элементы установлены правильно ' ],
+        2:  ['!$*','E:неправильно связаны элементы', 'элементы связаны правильно'],
+        3:  ["?2_square < ?3_square ","E:знание сократа должно быть больше"]
+    },
+
+</pre>
+</article>
+
+
+<article id='interactive' alt='interactive текст'>
+    <p>Массив. Каждый новый элемент - красная строка</p>
+    <p>{N }</p>
+    <p>{List }</p>
+    <p>{Image }</p>
+</article>
+
+
+<article alt='Messages Спецсимволы' id='messages'>
+    <ul>
+        <li><span class="key">@</span> .</li>
+        <li><span class="key">#</span> .</li>
+        <li><span class="key">$</span> .</li>
+        <li><span class="key">%</span> .</li>
+        <li><span class="key">&</span> .</li>
+        <li><span class="key">?</span> .</li>
+        <li><span class="key">*</span> .</li>
+    </ul>
+    <p>
+        There is more text just underneath.
+    </p>
+</article>
+
+
+<article alt='rules параметры' id='rules'>
+    <h3> </h3>
+    <ul>
+        <li><span class="key">count</span> .</li>
+        <li><span class="key">lower</span> .</li>
+        <li><span class="key">matched</span> .</li>
+        <li><span class="key">over</span> .</li>
+        <li><span class="key">l</span> .</li>
+        <li><span class="key">g</span> .</li>
+        <li><span class="key">error</span> .</li>
+        <li><span class="key">p</span> .</li>
+        <li><span class="key">cns</span> .</li>
+        <li><span class="key">id</span> .</li>
+        <li><span class="key">u</span> .</li>
+        <li><span class="key">c</span> .</li>
+        <li><span class="key">e</span> .</li>
+        <li><span class="key">o</span> .</li>
+        <li><span class="key">m</span> .</li>
+        <li></li>....</li>
+    </ul>
+</article>
+
+
+<article id='function' alt='before/after функция'>
+    <p><code>function(graphs,relations,checks)</code></p>
+</article>
+
+
+<article alt='Создание динамических схем' class='smaller' id='sokrat'>
+    <p>Создание динамической схемы.</p>
+    <pre>sokrat = new Sokrat("test-sokrat").load(data); </pre>
+    <div id="test-result" style="position: absolute;left: 200px;"></div>
+    <div class="st-button2" style="position: absolute; z-index: 10" id="test-check">Проверить</div>
+    <div class='scheme' id="test-sokrat" style="overflow: hidden; width:800px; height: 450px;margin: 0;"></div>
+</article>
+
+
+<article alt = 'Переопределение поведения графем' class='smaller' id='behavior'>
+    <p>два способа: </p>
+    <p>Для конкретной графемы (переопределять функции объекта Graph)</p>
+        <pre>
+    //получим графему Диллера
+var graph = sokrat.getGraphByName("diller");
+
+var foo = function(g){
+    //координаты графемы
+    var center = {x: g.prop.c[0] , y : g.prop.c[1] };
+    /*переопределим функцию dragMove так,
+            чтобы графему нельзя было далеко переместить */
+    g.dragMove = function(c,l,d){
+        if(Math.distance(c.x,c.y,center.x,center.y)>50){
+            var coord = Math.toOrto(Math.getAngle(center.x - c.x , center.y - c.y),50);
+            c.x = center.x - coord[0];
+            c.y = center.y - coord[1];
+        }
+        return true;
+    };
+});
+foo(graph);
+</pre>
+    <p><span class='red'>TODO:</span>Для всех графем (переопределять функции объекта Sokrat)</p>
+        <pre>
+         E.dragUp = function(graph,shape,port1,event){
+            if(I.delete_square.isPointInside(event.x, event.y)){
+                E.remove(this);
+            }else{
+                native.call(E,graph,shape,port1,event);
+            }
+        };
+        </pre>
+</article>
+
+
+<article  class='smaller' id='afunction' alt='"а" - функция'>
+<pre>
+    //функция применяемая для графем
+    //обход всех графем принадлежащих к группам "блоки" и "позиции"
+    sokrat.a("positions,blocks", foo);
+    // применение функции к графеме с именем диллер
+    sokrat.a("#diller,#diller2",foo);
+    //применение алгоритма к графемам класса фокус
+    sokrat.a("focus",foo);
+</pre>
+</article>
+
+
+<article alt='интерфейс проверки Checker' class='smaller' id='checker'>
+        <pre>
+           $("#test-check").click(function(){
+               api.levels_check("a_diller",s.getGraphData(),
+                    function(data){  $("#test-result").text("Результат " + data.status + " баллов");}
+               );
+           });
+        </pre>
+</article>
+
+
+<article alt='селекторы графем' class='smaller' id='selectors'>
+    <h3>селекторы графем 'a'-функция  </h3>
+        <pre>result = a([array,][selector,][function])</pre>
+        <code>array</code> - перечисление имен графем
+        <code>selector</code> - Sokrat-селектор.<br/>
+        <pre>true|false|value foo(graph,trace)</pre>
+
+        <pre>&lt; &gt;</pre>
+
+        <p>отбор объектов, имеющих определенное количество связей</p>
+       <span class="red">"2:has(1:,-)" в образовании заменить на 2:len(>1:,0)</span>
+        <pre>:len(SELECTOR,COUNT)</pre>
+        <p>присоединенные объекты, параметры необязательны</p>
+        <pre>&gt;PORT1:PORT2 , &gt;PORT1  , &gt;:PORT2 , &gt;</pre>
+        <p>соединение второго порядка</p>
+        <pre>&gt; &gt;computer</pre>
+        <p>отбор объектов присоединенных в любом порядке</p>
+        <pre>&gt;&gt;computer</pre>
+        отбор всех графем
+        <pre>*</pre>
+        отбор ничего
+        <pre>-</pre>
+        со смыслом N (N- число)
+        <pre>N</pre>
+        графем типа N
+        <pre>.N</pre>
+        графема с именем graphname
+        <pre>#graphname</pre>
+        отбор по множеству условий
+        <pre>A,B,C</pre> -
+    вычитание по селектору
+    <pre>:not(A)</pre>
+
+    применение селектора A к теущему объекту, селектора Б к массиву селекции.
+    удовлетворительно, если хоть один результат выборки A совпадает с результатом выборки B.
+    <span class="red">сделать чтобы если все есть в выборке B?</span>
+    <pre>has(A,B)</pre>
+
+
+        <code class='red'>foo</code>  - если возвращает true в результирующий массив <code>result</code> добавялется имя графемы<br/>
+        <code class='red'>trace</code>  - путь к графеме. массив состоящий из именвыбранных графем и портов<br/>
+</article>
+
+        
+<article alt='интерфейс SokratAPI' class='smaller' id='sokratapi'>
+    <table>
+        <tr><td><code>users_edit</code></td><td></td></tr>
+        <tr><td><code>users_info</code></td><td></td></tr>
+        <tr><td><code>users_reg</code></td><td></td></tr>
+        <tr><td><code>auth_login</code></td><td></td></tr>
+        <tr><td><code>auth_logout</code></td><td></td></tr>
+        <tr><td><code>levels_load</code></td><td></td></tr>
+        <tr><td><code>pages_graphs</code></td><td></td></tr>
+        <tr><td><code>levels_check</code></td><td></td></tr>
+        <tr><td><code>levels_list</code></td><td></td></tr>
+    </table>
+</article>
+        
+
+<article alt='интерфейс пользователя Interface' class='smaller' id='interface'>
+    <p><span class="red">TODO:</span> Заметки</p>
+    <p><span class="red">TODO:</span> Вступительный текст</p>
+    <p><span class="red">TODO:</span> Аккаунт</p>
+    <p><span class="red">TODO:</span> Пояснения Результата</p>
+</article>
+
+
+<script>
+    new Scheme({
+        data: [{graph: "block"},{graph: "block",c:[30,50]}],
+        container: "test-scheme",
+        width: 80,
+        scale:  0.7
+    });
+
+    API.file_load("levels/a_diller.lvl",function(data){
+        var sokrat = new Sokrat(document.getElementById("test-sokrat")).load(data);
+        //var g =s.getGraphByName("diller");
+
+
+        //todo use Checker
+        sokrat.a(null,"arrows",function(){
+        });
+
+        sokrat.a(null,"#diller,block",function(g){
+            var center = {x: g.prop.c[0] , y : g.prop.c[1] };
+            g.dragMove = function(c,l,d){
+                if(Math.distance(c.x,c.y,center.x,center.y)>50){
+                    var coord = Math.toOrto(Math.getAngle(center.x - c.x , center.y - c.y),50);
+                    c.x = center.x - coord[0];
+                    c.y = center.y - coord[1];
+                }
+                return true;
+            };
+        });
+
+        $("#test-check").click(function(){
+            API.levels_check("a_diller",sokrat.getGraphData(),
+                    function(data){  $("#test-result").text("Результат " + data.status + " баллов");}
+            );
+        });
+    });
+
+</script>
+</body>
+
+</html>

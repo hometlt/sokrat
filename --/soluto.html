@@ -1,0 +1,164 @@
+<!-- Шаблон Soluto для тренажера по схематизации-->
+<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" media="all" href="../css/sokrat.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="../css/slides.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="../css/login.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="../css/metal.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="../css/soluto.css"/>
+
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.history.js"></script>
+    <script src="lib/jquery.json.js"></script>
+    <script src="lib/jquery.cookie.js"></script>
+    <script src="lib/sha1.js"></script>
+    <script src="lib/raphael.js"></script>
+    <script src="../lib/loader.js"></script>
+
+    <script src="sokrat/soluto.js"></script>
+
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+    <meta property="og:title"     content="Тренажер по схематизации" />
+    <meta property="og:type"      content="website" />
+    <meta property="og:url"       content="http://sokrat.gamesinedu.com/index.html" />
+    <meta property="og:image"     content="http://sokrat.gamesinedu.com/favicon.png" />
+    <meta property="og:site_name" content="Тренажер по схематизации" />
+
+    <!--<script type="text/javascript" src="//vk.com/js/api/openapi.js?53"></script>
+    <script type="text/javascript" src="//connect.facebook.net/ru_RU/all.js"></script>
+    <script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>-->
+
+    <title>Тренажер по схематизации</title>
+
+    <script type="text/javascript">
+
+        window.onload = function(){
+
+            //Soluto.doSocial();
+
+            initLibraries(function(){
+
+                window.E = new Sokrat("x-canvas").setScale(1);
+                window.I = new Interface(E);
+                window.R = I.paper;
+
+                Soluto.init();
+                I.onAuth = Soluto.onAuth;
+                I.auth = new WindowAuth(Soluto.onAuth);
+                I.selectAllLevels = Soluto.selectAllLevels;
+
+
+                //GRAPH.CLASS["soluto.focus"] = {graph:"block",type: 'ellipse', r:20, "attrs-block": {fill:"#ddf8ff", stroke: "#87cefa"},"attrs-text": {fill:"#87cefa"}    };
+                //Scheme.update();
+
+
+
+                I.initialInterface = function(){
+                    Soluto.sokratJSLabel.show();
+                    setTimeout(function(){Soluto.a.show()},0);
+                    setTimeout(function(){Soluto.b.show()},500);
+                    setTimeout(function(){Soluto.c.show()},1000);
+                    setTimeout(function(){Soluto.d.show()},1500);
+                    Soluto.d.click(function(){
+                        Soluto.closeAll();
+                        I.makeSlides("specs",0);
+                    });
+                };
+
+
+
+                I.selectLevel = function(level){
+                    Soluto.closeAll();
+                    Soluto.sokratJSLabel.hide();
+                    //I.closeMenu();
+
+                    API.levels_load(level,function(data){
+                        alert(data);
+                        I.levelname = level;
+                        I.engine.load(data);
+                        //I.startGame();
+                        I.commentsWindow.update(I.engine.level);
+                        I.levelInterface();
+                        $.history.load(["levels",data.id].join("/"))
+                    });
+
+                };
+
+                I.initPages();
+
+
+
+
+
+            });
+        }
+    </script>
+</head>
+<body>
+
+<div id="x-canvas" style="width:100%; height: 100%; position: absolute;"></div>
+
+<!--scheme style="width:200px; height: 150px; position:absolute; right: 20px; top: 140px">
+    {graph: "soluto.focus", label: "А", c:[150,267]},
+    {graph: "soluto.focus", label: "B", c:[100,220]},
+    {graph: "soluto.focus", label: "C", c:[60,280]},
+    {shape: "text", text: "?", x: 160, y:220,font: '50px "Verdana"',fill:"#87cefa"}
+</scheme-->
+
+<div id="x-slidescounter" style="position: absolute; display: none; top: 30px ; right: 20px; font-size: 32px; z-index: 10">
+    <span class='key' id="x-left">&lt;</span>
+    <span id="slide_current">1</span>/<span id="slide_all">10</span>
+    <span class='key' id="x-right">&gt;</span>
+</div>
+
+
+<div class="social" style="background-position: 0 -736px!important;bottom: 10px; right: 10px;"></div>
+<div class="social" style="background-position: 0 -704px!important;bottom: 10px; right: 50px;"></div>
+<div class="social" style="background-position: 0 -288px!important;bottom: 10px; right: 90px;"></div>
+<div class="social" style="background-position: 0 -160px!important;bottom: 10px; right: 130px;"></div>
+
+
+
+<div id="x-prezi" class="slides" style="background: #646464; position: absolute; display: none; top:100px; left:0;right:0" >
+</div>
+
+
+
+
+<!--div id="loginForm">
+        <div class='username'>
+            <input placeholder="Имя пользователя или E-mail" title="Имя пользователя или E-mail" required type="text" name="email" autofocus="autofocus" tabindex="1"/>
+        </div>
+
+        <div class="password">
+            <input placeholder="Пароль" title="Пароль" required type="password" name="password" tabindex="2"/>
+            <button type="submit" tabindex="4">Войти</button>
+        </div>
+
+        <div class="remember_try_forgot" style="text-align: justify;">
+            <label class="remember">
+                <input type="checkbox" name="remember" value="1" tabindex="3">
+                <span>Запомнить</span>
+            </label>
+            <span class="separator">·</span>
+            <a class="try"  onclick="document.forms['DemoForm'].submit()">Попробовать!</a>
+        </div>
+</div-->
+
+<!--div style="position: absolute; top: 150px; left:0">
+    <div id="fb-root"></div>
+    <div class="fb-like" data-href="http://sokrat.hometlt.ru/soluto.html" data-send="false" data-layout="button_count" data-width="450" ></div>
+    <div id="vk_comments"></div>
+
+    <div id="vk_like" style="margin: 20px" ></div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://sokrat.hometlt.ru" data-text="Добро пожаловать!" data-lang="ru">Твитнуть</a>
+</div-->
+
+<div id="test" style="display: none"><div id="x-debug"></div><input type="text" id="x-console" value="31"/></div>
+
+</body>
+</html>

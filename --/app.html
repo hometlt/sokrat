@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="user-scalable=no, width=device-width" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+<meta HTTP-EQUIV="Expires" CONTENT="0">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+
+<link type="text/css" rel="stylesheet" media="all" href="../css/sokrat.css"/>
+<link type="text/css" rel="stylesheet" media="all" href="../css/slides.css"/>
+
+<link type="text/css" rel="stylesheet" media="all" href="../css/reset.css"/>
+<link type="text/css" rel="stylesheet" media="all" href="../css/style.css"/>
+
+
+<link rel="shortcut icon" href="../favicon.png">
+<title>Тренажер по схематизации</title>
+<script src="../lib/loader.js"></script>
+
+<script type="text/javascript">
+window.VERSION = 1;
+
+initLibraries("sokrat/interface{,.senses,.auth,.editor,.menu}.js",
+//обратная связь, нужна для разработки loaderа
+        function(current,total,filename){
+//            document.title = current + " / "+total + "  " + filename;
+        },
+        function(images){
+
+            var attrs = getUrlVars(window.location.href);
+            attrs.test && (API.SETTINGS.test = attrs.test);
+            attrs.render && (API.SETTINGS.render  = attrs.render);
+
+            SOKRAT.IMAGES = images;
+            window.E = new Sokrat("canvas").setScale(1);
+            window.R = E.paper;
+            window.I = Interface;
+            Interface.init(E);
+
+           //document.title = VERSION;
+
+            $.historyLoad(window.location.href);
+
+
+});
+
+
+
+
+
+
+
+function cl(){
+    var mrl   = $("#w_slide_panel").css("margin-left");
+    var w_sp  = $("#w_slide_panel").width();
+    //alert("-"+w_sp);
+    if(mrl != "-"+w_sp+"px"){
+        $("#w_slide_panel").animate({
+            marginLeft: '-='+w_sp
+        }, 400);
+    }
+    if(mrl == "-"+w_sp+"px"){
+        $("#w_slide_panel").animate({
+            marginLeft: '+='+w_sp
+        }, 400);
+    }
+};
+
+function cl_sp2(){
+    var mrl   = $("#w_slide_panel2").css("margin-left");
+    var w_sp  = ($("#w_slide_panel2").width());
+    //alert("-"+w_sp);
+    if(mrl != "-"+w_sp+"px"){
+        $("#w_slide_panel2").animate({
+            marginLeft: '-='+w_sp
+        }, 400);
+    }
+    if(mrl == "-"+w_sp+"px"){
+        $("#w_slide_panel2").animate({
+            marginLeft: '+='+w_sp
+        }, 400);
+    }
+};
+
+function cl_sp3(){
+    var mrl2  = $("#w_slide_panel").css("margin-left");
+    var mrl   = $("#w_slide_panel2").css("margin-left");
+    var w_sp  = ($("#w_slide_panel2").width());
+    //alert("-"+w_sp);
+    if(mrl2 != '0px' && mrl != '0px'){
+        if(mrl != "-"+w_sp+"px"){
+            $("#w_slide_panel2").animate({
+                marginLeft: '-='+w_sp
+            }, 400);
+        }
+        if(mrl == "-"+w_sp+"px"){
+            $("#w_slide_panel2").animate({
+                marginLeft: '+='+w_sp
+            }, 400);
+        }}
+};
+
+function cl_any(element, mLeft, type, anim_elem){
+    var open   = $("#"+element).attr("class");
+    var mrl    = $("#"+element).css("margin-left");
+    var left   = parseInt(mLeft);
+    if (left == 0){
+        var w_sp   = $("#"+element).width();
+    }else{
+        var w_sp   = $("#"+element).width() + left;
+    }
+        //var w_sp1  = w_sp + mLeft;
+    //alert(w_sp);
+    if(!open){
+        open = 'close';
+    }
+    if(type == 1){
+        if(open == 'close'){
+            //alert(mrl);
+            //alert("-"+w_sp1+"px");
+            $("#"+anim_elem).css({backgroundPosition: '-47px 50%'});
+            $("#"+element).animate({
+                'marginLeft': '-='+w_sp
+            }, 400);
+            $("#"+element).attr("class", "open");
+        }
+        if(open == 'open'){
+            //alert(mrl);
+            //$(this).animate({backgroundPosition: '+=50px 50px'}, 30);
+            //alert($(this).attr("id"));
+            $("#"+anim_elem).css({backgroundPosition: '0px 50%'});
+            $("#"+element).animate({
+                'marginLeft': '+='+w_sp
+            }, 400, function(){
+                $("#"+element).css({'margin-left': mLeft+'px'});
+            });
+            $("#"+element).attr("class", "close");
+            //$("#"+element).attr({"open": "0"});
+        }
+    }
+
+    if(type == 2){
+        if(open=="close"){
+            $("#"+element).animate({
+                marginLeft: '-='+w_sp,
+                backgroundPosition: '(0px 50%)'
+            }, 400);
+            $("#"+element).attr("class", "open");
+            //$("#"+element).attr({"open": "0"});
+        }
+    }
+
+    if(type == 3){
+        if(open=="open"){
+            $("#"+element).animate({
+                marginLeft: '+='+w_sp,
+                backgroundPosition: '(-45px 50%)'
+            }, 400, function(){
+                $("#"+element).css({'margin-left': mLeft+'px'});
+            });
+            $("#"+element).attr("class", "close");
+            //$("#"+element).attr({"open": "0"});
+        }
+    }
+
+};
+
+function cl2(){
+    var mrl   = $("#w_slide_panel").css("margin-left");
+    var w_sp  = $("#w_slide_panel").width();
+    //alert(mrl);
+    if(mrl == "-"+w_sp+"px"){
+        $("#w_slide_panel").animate({
+            marginLeft: '+='+w_sp
+        }, 400);
+    }
+};
+function cl3(){
+    var mrl   = $("#w_slide_panel").css("margin-left");
+    var w_sp  = $("#w_slide_panel").width();
+    //alert(mrl);
+    if(mrl != "-"+w_sp+"px"){
+        $("#w_slide_panel").animate({
+            marginLeft: '-='+w_sp
+        }, 400);
+    }
+};
+
+//function gen_s_panel(){
+//    var c_width   = $(window).width();
+//    var c_height  = $(window).height();
+//    var cd_width  = c_width/2;
+
+//}
+
+
+function ex(){
+    var mrl = $("#l_enter").css("margin-left");
+    //alert(mrl);
+    $("#l_enter").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400).delay(3500).animate({
+                marginLeft: '+=200',
+                opacity: 1
+            }, 400);
+
+    //css({"margin-left" : "75px", "opacity" : "1"});
+};
+
+function exs1(element){
+    var w_field_tabs_h = $("#w_field_tabs").height();
+    var mrl1 = $("#w_user_tab").css("margin-left");
+    var mrl2 = $("#w_tasks_tab").css("margin-left");
+    var mrl3 = $("#w_about_tab").css("margin-left");
+
+
+    var wrl1 = $("#w_user_tab").width();
+    var wrl111 = ($("#w_user_tab").height())+10;
+    var wrl2 = $("#w_tasks_tab").width();
+    var wrl3 = $("#w_about_tab").width();
+
+    var wrl4 = $("#w_field_tabs").width();
+    var wrl5 = $("#w_field_tabs").height();
+
+    var wrl112 = (wrl4-wrl111)+10;
+
+    var n = 0;
+
+
+    var hrl1 = wrl1+10;
+    var wrl11 = wrl1;
+    var wwr = wrl3+10;
+
+    var wrl21 = wrl4-wrl1;
+    var hrl2 = $("#w_tasks_tab").height();
+    var hrl3 = $("#w_about_tab").height();
+
+    if(element == "w_about_tab" && $("#anim").val() == '0'){
+        $("#anim").val('1');
+        $("#wat_i").fadeToggle(300);
+        $("#wat_c").fadeToggle(300, function(){
+            $("#anim").val('0');
+        });
+    }
+    if(element == "w_tasks_tab" && $("#anim").val() == '0'){
+        if(hrl3 == wrl5 && $("#w_user_tab").width() != wrl4){
+            $("#anim").val('1');
+            $("#wtt_i").fadeOut(300, function(){
+                $("#w_about_tab").animate({
+                    height: '-='+hrl1
+                }, 300, function(){
+                    $("#w_tasks_tab").animate({
+                        width: '+='+wrl21
+                    }, 300, function(){
+                        $("#wtt_c").fadeIn(300, function(){
+                            $("#anim").val('0');
+                        });
+                    });
+                });
+            });
+
+
+        }else if(hrl3 != wrl5 && $("#w_user_tab").width() != wrl4){
+            $("#anim").val('1');
+            $("#wtt_c").fadeOut(300, function(){
+                $("#w_tasks_tab").animate({
+                    width: '-='+wwr
+                }, 300, function(){
+                    $("#w_about_tab").animate({
+                        height: w_field_tabs_h+'px'
+                    }, 300, function(){
+                        $("#wtt_i").fadeIn(300, function(){
+                            $("#anim").val('0');
+                        });
+                    });
+                });
+            });
+
+        }
+        if($("#w_user_tab").width() == wrl4){
+            $("#anim").val('1');
+            $("#wut_c").fadeOut(300, function(){
+                $("#w_user_tab").animate({
+                    width: '-='+wwr
+                }, 300, function(){
+                    $("#w_about_tab").animate({
+                        marginTop: '0px',
+                        height: w_field_tabs_h+'px'
+                    }, 300, function(){
+                        $("#wut_i").fadeIn(300,function(){
+                            $("#wtt_i").fadeOut(300, function(){
+                                $("#w_about_tab").animate({
+                                    height: '-='+wrl111
+                                }, 300, function(){
+                                    $("#w_tasks_tab").animate({
+                                        width: '+='+(wrl112)
+                                    }, 300, function(){
+                                        $("#wtt_c").fadeIn(300, function(){
+                                            $("#anim").val('0');
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        }
+
+    }
+    if(element == "w_user_tab" && $("#anim").val() == '0'){
+        if($("#w_about_tab").css("margin-top") == "0px" && $("#w_tasks_tab").width() != wrl4){
+            $("#anim").val('1');
+            $("#wut_i").fadeOut(300, function(){
+                $("#w_about_tab").animate({
+                    marginTop: '+='+hrl1,
+                    height: '-='+hrl1
+                }, 300, function(){
+                    $("#w_user_tab").animate({
+                        width: '+='+wrl21
+                    }, 300, function(){
+                        $("#wut_c").fadeIn(300, function(){
+                            $("#anim").val('0');
+                        });
+                    });
+                });
+            });
+        }else if($("#w_about_tab").css("margin-top") != "0px" && $("#w_tasks_tab").width() != wrl4){
+            $("#anim").val('1');
+            $("#wut_c").fadeOut(300, function(){
+                $("#w_user_tab").animate({
+                    width: '-='+wwr
+                }, 300, function(){
+                    $("#w_about_tab").animate({
+                        marginTop: '0px',
+                        height: w_field_tabs_h+'px'
+                    }, 300, function(){
+                        $("#wut_i").fadeIn(300, function(){
+                            $("#anim").val('0');
+                        });
+                    });
+                });
+            });
+
+        }
+        if($("#w_tasks_tab").width() == wrl4){
+            $("#anim").val('1');
+            $("#wtt_c").fadeOut(300, function(){
+                $("#w_tasks_tab").animate({
+                    width: '-='+wwr
+                }, 300, function(){
+                    $("#w_about_tab").animate({
+                        height: w_field_tabs_h+'px'
+                    }, 300, function(){
+                        $("#wtt_i").fadeIn(300, function(){
+                            $("#wut_i").fadeOut(300, function(){
+                                $("#w_about_tab").animate({
+                                    marginTop: '+='+hrl1,
+                                    height: '-='+hrl1
+                                }, 300, function(){
+                                    $("#w_user_tab").animate({
+                                        width: '+='+wrl21
+                                    }, 300, function(){
+                                        $("#wut_c").fadeIn(300, function(){
+                                            $("#anim").val('0');
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        }
+    }
+
+};
+
+function exs(element){
+    var mrl1 = $("#w_user_tab").css("margin-left");
+    var mrl2 = $("#w_tasks_tab").css("margin-left");
+    var mrl3 = $("#w_about_tab").css("margin-left");
+    //alert(mrl);
+    $("#w_user_tab").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400).delay(3500).animate({
+                marginLeft: '+=200',
+                opacity: 1
+            }, 400);
+
+    $("#w_tasks_tab").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400).delay(3500).animate({
+                marginLeft: '+=200',
+                opacity: 1
+            }, 400);
+
+    $("#w_about_tab").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400).delay(3500).animate({
+                marginLeft: '+=200',
+                opacity: 1
+            }, 400);
+
+    $("#w_title").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400).delay(3500).animate({
+                marginLeft: '+=200',
+                opacity: 1
+            }, 400);
+
+    //css({"margin-left" : "75px", "opacity" : "1"});
+};
+
+function exs4(element){
+    // Проверка на touch события
+    var supportsTouch = ('ontouchstart' in document.documentElement);
+    if(supportsTouch == true){
+        var event_action = 'touchstart';
+    }else{
+        var event_action = 'click';
+    }
+    $.ajax({
+        type: "POST",
+        processData: false,
+        url: "materials/about/about.htm",
+        success: function(data){
+            $("#waw_c").html(data);
+        }
+    });
+    var mrl1 = $("#w_user_tab").css("margin-left");
+    var mrl2 = $("#w_tasks_tab").css("margin-left");
+    var mrl3 = $("#w_about_tab").css("margin-left");
+    //alert(mrl);
+    $("#w_user_tab").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400).delay(100).animate({
+                marginLeft: '+=200',
+                display: 'none'
+            }, 400);
+
+    $("#w_tasks_tab").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400).delay(100).animate({
+                marginLeft: '+=200',
+                display: 'none'
+            }, 400);
+
+    $("#w_about_tab").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400).delay(100).animate({
+                marginLeft: '+=200',
+                display: 'none'
+            }, 400);
+
+    $("#w_title").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400, function(){
+        $("#back_link2").fadeIn();
+        $("#w_title").text('О схематизации');
+    }).delay(100).animate({
+                marginLeft: '+=200',
+                opacity: 1,
+                display: 'block'
+            }, 400, function(){
+                $("#w_about_window").fadeIn();
+                $("#w_about_window").animate({
+                    opacity: 1
+                }, 100);
+                $("#back_link2").off(event_action);
+                $("#back_link2").on(event_action, function(e){
+                    $("#back_link2").attr({'href':'#menu'});
+                    e.preventDefault();
+                    exs5();
+                    //alert('hi');
+                });
+            });
+
+    //css({"margin-left" : "75px", "opacity" : "1"});
+};
+
+function gen_gloss(){
+
+    // Проверка на touch события
+    var supportsTouch = ('ontouchstart' in document.documentElement);
+    if(supportsTouch == true){
+        var event_action = 'touchstart';
+    }else{
+        var event_action = 'click';
+    }
+    var gloss        = $("<div/>").attr({'id':'gloss'}).css({'position':'absolute','width':'100%','height':'100%','background':'black','opacity':'0.5','z-index':'1500','display':'none'});
+    var gloss_window = $("<div/>").attr({'id':'gloss_window'}).css({'position':'absolute', 'background':'white','z-index':'1500', 'overflow':'hidden', 'display':'none'});
+    var gw_content   = $("<div/>").attr({'id':'gw_content'}).css({'background':'white','z-index':'1500','padding':'10px'});
+    $("#body_main").append(gloss);
+    $("#body_main").append(gloss_window);
+    gloss_window.append(gw_content);
+    c_resize_window('gloss_window',50,50,50);
+    scroll_list_in_block('gw_content', 'gloss_window', 0,0);
+    //gw_content();
+    $("#gloss").fadeIn();
+    $("#gloss_window").fadeIn(300, function(){
+
+        $("#gloss").on(event_action, function(){
+            $("#gloss").fadeOut();
+            $("#gloss_window").fadeOut(300, function(){
+                $("#gloss").remove();
+                $("#gloss_window").remove();
+            });
+        })
+
+    });
+    $.ajax({
+        type: "POST",
+        url: "materials/glossary/glossary.htm",
+        success: function(data){
+            $("#gw_content").html(data);
+        }
+
+    });
+}
+
+function add_event_bklink(){
+    // Проверка на touch события
+    var supportsTouch = ('ontouchstart' in document.documentElement);
+    if(supportsTouch == true){
+        var event_action = 'touchstart';
+    }else{
+        var event_action = 'click';
+    }
+    $("#to_about_sc").bind(event_action, function(){
+        exs4();
+    });
+}
+
+function exs5(element){
+// Проверка на touch события
+    var supportsTouch = ('ontouchstart' in document.documentElement);
+    if(supportsTouch == true){
+        var event_action = 'touchstart';
+    }else{
+        var event_action = 'click';
+    }
+
+    var mrl1 = $("#w_user_tab").css("margin-left");
+    var mrl2 = $("#w_tasks_tab").css("margin-left");
+    var mrl3 = $("#w_about_tab").css("margin-left");
+
+    $("#w_title").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400);
+
+    $("#w_about_window").animate({
+        marginLeft: '-=200',
+        opacity: 0.0
+    }, 400, function(){
+        $("#w_about_window").css({display: 'none'});
+        $("#w_title").text('Главное меню');
+    }).delay(100).animate({
+                marginLeft: '+=200'
+            }, 400, function(){
+                $("#back_link2").fadeOut();
+
+                $("#w_user_tab").animate({
+                    opacity: 1
+                }, 400);
+
+                $("#w_about_tab").animate({
+                    opacity: 1
+                }, 400);
+
+                $("#w_tasks_tab").animate({
+                    opacity: 1
+                }, 400);
+                $("#w_title").animate({
+                    marginLeft: '+=200',
+                    opacity: 1
+                }, 400);
+                $("#back_link2").off(event_action);
+            });
+
+    //css({"margin-left" : "75px", "opacity" : "1"});
+};
+
+//Функция запуска генератора таблиц
+function create_table(){
+    var category    = ["Объекты и действия","Пространства","Позиции","Рамки","Ситуация","Смысловой топ","Шаг развития","Управление","Баланс"];
+    var difficulty  = ["Уровень 1","Уровень 2","Уровень 3"];
+    var w = $("#task_table").width();
+    var h = $("#task_table").height();
+    $("#task_table").empty();
+    level_table(category, difficulty, w, h);
+}
+
+function edit_title(text){
+    $("#w_title").text(text);
+    $("#w_title").show();
+}
+
+function event_act_add(){
+    // Проверка на touch события
+    var supportsTouch = ('ontouchstart' in document.documentElement);
+    if(supportsTouch == true){
+        var event_action = 'touchstart';
+    }else{
+        var event_action = 'click';
+    }
+    $("#back_side").on(event_action, function(){
+        cl_any('w_slide_panel', '0', 3);
+        cl_any('w_slide_panel2', '0', 3);
+    });
+    $("#l_enter").on(event_action, function(){
+        //ex();
+    });
+    $("#w_user_tab").on(event_action, function(){
+        exs1('w_user_tab');
+    });
+    $("#tasks_close").on(event_action, function(){
+        exs1('w_tasks_tab');
+        $("#tasks_close").fadeOut(300);
+    });
+    $("#wtt_i").on(event_action, function(){
+        exs1('w_tasks_tab');
+        $("#tasks_close").fadeIn(300);
+    });
+    $("#w_about_tab").on(event_action, function(){
+        //exs1('w_about_tab');
+    });
+    $("#wsp_arrow").on(event_action, function(){
+        cl_any('w_slide_panel','0',1);
+    });
+    $("#about_close").on(event_action, function(){
+        exs1('w_about_tab');
+        $("#about_close").fadeOut(300);
+    });
+    $("#wat_i").on(event_action, function(){
+        exs1('w_about_tab');
+        $("#about_close").fadeIn(300);
+    });
+    $("#wsp_arrow2").on(event_action, function(){
+        cl_any('w_slide_panel2', '0', 3);
+    });
+    $("#ssp_arrow").on(event_action, function(){
+        cl_any('s_slide_panel', '-50', 1, 'ssp_arrow');
+    });
+
+    $("#to_about_sc").on(event_action, function(){
+        exs4();
+    });
+
+    $("#info_butt").on(event_action, function(){
+        gen_gloss();
+    });
+
+
+
+    $("#back_link").on(event_action, function(){
+        event.preventDefault();
+        //alert($(this).attr('href'));
+        window.location.href = $(this).attr('href');
+    });
+
+
+    $("#to_task_link").on(event_action, function(){
+        event.preventDefault();
+        //alert($(this).attr('href'));
+        window.location.href = $(this).attr('href');
+    });
+
+    $("#l_enter").on(event_action, function(){
+        event.preventDefault();
+        //alert($(this).attr('href'));
+        window.location.href = $(this).attr('href');
+    });
+
+}
+
+//Функция создания таблицы уровней
+function level_table(category, difficulty, w, h){
+    $("#task_table").empty();
+
+
+    // Проверка на touch события
+    var supportsTouch = ('ontouchstart' in document.documentElement);
+    if(supportsTouch == true){
+        var event_action = 'touchstart';
+    }else{
+        var event_action = 'click';
+    }
+    //alert(supportsTouch);
+    //alert(category.length);
+    var w_block   = w/(category.length+1) - 2;
+    var h_block   = h/(difficulty.length+1) - 2;
+
+    API.levels_list(function(data){
+        var _list =  data.list;
+
+        for(var dif=0; dif<=difficulty.length; dif++) {
+
+
+            for(var cat=0; cat<=category.length; cat++){
+                if(dif==0 && cat==0){
+                    var divblock = $("<div/>").attr('id',dif+"_"+cat).width(w_block).height(h_block).css({'background':'#444444','color':'#fff', 'border':'0px', 'text-align':'center'});
+                    $("#task_table").append(divblock);
+                }
+                else if(dif==0 && cat>0){
+                    var divblock = $("<div/>").attr('id',dif+"_"+cat).text(category[cat-1]).width(w_block).height(h_block).css({'background':'#00AEFF','border':'0px', 'color':'#fff','text-align':'center'});
+                    $("#task_table").append(divblock);
+                }
+                else if(dif>0 && cat==0){
+                    var divblock = $("<div/>").attr('id',dif+"_"+cat).text(difficulty[dif-1]).width(w_block).height(h_block).css({'background':'#AAC900','border':'0px', 'color':'#fff','text-align':'center'});
+                    $("#task_table").append(divblock);
+                }else{
+
+                    var divblock = $("<div/>").attr('id',dif+"_"+cat).css({'cursor':'pointer','border':'0px', 'text-align':'center', 'overflow':'hidden'}).width(w_block).height(h_block);
+                    divblock.attr("difficulty",dif);
+                    divblock.attr("category",cat);
+
+                    divblock.on(event_action, function(event){
+                        //alert('hi1');
+                        event.stopPropagation();
+                        cl_any('w_slide_panel','0',2);
+                        cl_any('w_slide_panel2', '0', 3);
+                        var dif = $(this).attr("difficulty");
+                        var cat =  $(this).attr("category");
+                        $("#wtl_content").empty();
+                        var wtl_title = $("<div/>").attr('id','#wtl_title').css({"font-size":"24px", "font-family":"roboto-thin", "color":"#313131", "clear":"both", "text-align":"left", "width":"100%","height":"50px"}).text(category[cat-1]+" - "+difficulty[dif-1]);
+                        $("#wtl_content").append(wtl_title);
+                        //alert($.toJSON(_list));
+                        //alert(dif);
+                        //ширина поля
+                        var wtl     = ($('#wtl_content').width())/2.2;
+                        //alert(wtl);
+                        var i = 1;
+                        var clear    = $("<div/>").css({"clear":"both"});
+                        for(var level in _list) {
+                            //alert(_list[level].difficulty);
+                            if (_list[level].difficulty == dif && _list[level].category == cat){
+                                //alert("hi");
+                                if(i%2){
+                                    var t_block   = $("<div/>").attr({'id':'#task/'+level,'class':'t_block'}).css({'float':'left', 'overflow':'hidden', 'border':'1px solid rgb(204, 204, 204)', 'background':'#fff', 'width':wtl,'height':wtl});
+                                    var tab       = $("<div/>").css({'width':'1px', 'height':'20px', 'clear':'both'});
+                                    $("#wtl_content").append(tab);
+                                }else{
+                                    var t_block   = $("<div/>").attr({'id':'#task/'+level,'class':'t_block'}).css({'float':'right', 'overflow':'hidden', 'border':'1px solid rgb(204, 204, 204)', 'background':'#fff', 'width':wtl,'height':wtl});
+
+                                }
+                                var block_title   = $("<div/>").attr('id','#task/'+level).css({"font-size":"24px", "color":"#313131", "font-family":"roboto-thin", "text-align":"center", 'width':'100%','height':'50px'}).text(_list[level].title);
+
+                                var block_img     = $("<div/>").attr('id','#task/'+level).css({"font-size":"24px", "background":"url('img/test_img.png') no-repeat 50% 50%", "width":"100%", "height":"100%"});
+                                var sc_title      = $("<div/>").attr({'id':'#task/'+level,'class':'t_block'}).css({'font-size':'16px', 'margin-top':'-50px', 'padding':'0px', 'background':'rgb(129, 129, 129)', 'width':'100%','height':'50px'});
+                                var sc_title2     = $("<div/>").attr({'id':'#task/'+level,'class':'t_block'}).css({'padding':'5px'}).text(_list[level].title);
+                                var check         = $("<div/>").css({'background':'#AAC900', 'width':'20px', 'height':'20px', 'position':'absolute'});
+                                t_block.append(check)
+                                sc_title.append(sc_title2);
+
+                                //var scheme =  $("<scheme/>").width(80).height(80);
+                                //divblock.append(scheme);
+
+                                //alert(i);
+                                i++;
+                                var sc    = $("<div/>").attr('id','#task/'+level).css({"font-size":"24px", "clear":"both","width":"100%", "height":"100%"});
+
+
+                                //var link          = $("<a/>").attr({'href':'#task','id':level}).css({"height":wtl, "width":wtl, 'float':'left', "display":"block"}).click(function(){
+
+                                // Проверка на touch события
+                                var supportsTouch2 = ('ontouchstart' in document.documentElement);
+                                if(supportsTouch2 == true){
+                                    var event_action1 = 'touchend';
+                                }else{
+                                    var event_action1 = 'click';
+                                }
+
+                                var link          = $("<a/>").attr({'href':'#task','id':level}).on(event_action1,function(){
+                                    $("#wtl_content2").empty();
+                                    cl_any('w_slide_panel2', '0', 2);
+                                    for(var task in _list) {
+                                        if (task == $(this).attr('id')){
+                                            API.levels_load(task, function(data){
+                                                //$.toJSON(data.data.interactive));
+                                                //var s = task;
+                                                //alert($.toJSON(data.id));
+                                                //alert(data.id);
+
+                                                var htmlInteractive = data.data.interactive.join("<br>").replace(/\{(.*?)\}/gm,function(args,a){
+                                                    var pos = a.indexOf(" ");
+                                                    if(pos!=-1){
+                                                        return a.substring(pos+1);
+                                                    }
+                                                    return "";});
+
+                                                $("#wtl_content2").html(data.title+'<br><br>'+htmlInteractive);
+                                                var dt_link  = $("<a/>").attr({'href':'#task/'+data.id}).css({"padding":"5px 5px 5px 5px", "z-index":"1100", "position":"absolute", "left":"100%", "border":"4px solid #fff", "font-family":"Roboto-light", "font-size":"16px", "background":"#313131", "color":"#fff", "text-decoration":"none", "margin-left":"-250px", "top":"100%", "margin-top":"-80px"}).text("Перейти к решению").on(event_action, function(event){
+                                                    event.preventDefault();
+                                                    //alert($(this).attr('href'));
+                                                    window.location.href = $(this).attr('href');
+                                                    cl_any('w_slide_panel2', '0', 3);
+                                                    cl_any('w_slide_panel', '0', 3);
+                                                });
+                                                $("#wtl_content2").append(dt_link);
+                                            });
+
+                                        }
+                                    }
+                                    $("#wtl_content2").append(clear);
+                                });
+                                //var link        = $("<a/>").attr('href','#task/'+level);
+                                //var task_block  = t_block.append(block_title).append(block_img);
+                                var task_block  = t_block.append(sc);
+                                sc.append(sc_title);
+                                var l_t_block   = link.append(task_block);
+
+                                ///////////////////////////////
+
+                                task_block.mouseenter(function(){
+                                    $(this).children().find(".t_block :eq(0)").css({"background":"#000"});
+                                    //$(this).children().find(".t_block :eq(0)").animate({
+                                    //    marginTop: '-50px'
+                                    //}, 200)
+                                });
+                                task_block.mouseleave(function(){
+                                    $(this).children().find(".t_block :eq(0)").css({"background":"rgb(129, 129, 129)"});
+                                    //$(this).children().find(".t_block :eq(0)").animate({
+                                    //    marginTop: '0px'
+                                    //}, 200)
+                                });
+
+                                //t_block.click(cl_sp2());
+                                link.css({"color":"#fff","text-decoration":"none","font-family":"roboto-thin","font-size":"24px"});
+                                $("#wtl_content").append(l_t_block);
+                                //alert(_list[level].scheme);
+                                var s = new Scheme({data:{load: _list[level].scheme}, scale: 0, labels: false, container: sc[0]});
+                            }
+                        }
+                        $("#wtl_content").append(clear);
+                    });
+
+                    for(var level in _list) {
+                        //alert(_list[level].difficulty);
+                        if (_list[level].difficulty == dif && _list[level].category == cat){
+                            //alert("hi");
+                            var link = $("<p/>").text(_list[level].title);
+                            divblock.append(link);
+                            //var scheme =  $("<scheme/>").width(80).height(80);
+                            //divblock.append(scheme);
+
+                            //var s = new Scheme({data:{load: _list[level].scheme}, width: 80 ,labels: false, container: scheme[0]});
+                        }
+                    }
+
+                    divblock.mouseenter(function(){
+                        $(this).css({"background":"#d7d7d7","color":"#fff"});
+                        //$("#"+"0_"+n).css({"background":"#00AEFF"});
+                        //$("#"+i+"_0").css({"background":"#00AEFF"});
+                    });
+                    divblock.mouseleave(function(){
+                        $(this).css({"background":"#f8f8f8","color":"#313131"});
+                        //alert(n);
+                        //alert(i);
+                        //$("#"+"0_"+n).css({"background":"#FFF"});
+                        //$("#"+i+"_0").css({"background":"#FFF"});
+                    });
+                    $("#task_table").append(divblock);
+                }
+            }
+        }
+
+    });
+};
+
+var scroll_list = function(id, top, bottom){
+    var element = document.getElementById(id);
+    //alert("hallo");
+    //alert($("#w_slide_panel").offset().top);
+    element.addEventListener('touchstart', function(event) {
+        //var lcf_off		 = $(window).offset().top;
+        var sc_top       = $("#"+id).offset().top;
+        var shift_Y      = event.touches[0].pageY - sc_top;
+        // Стартовые координаты курсора при таче
+        var y_start      = event.pageY;
+        //alert("hallo");
+
+        element.addEventListener('touchmove', function(event) {
+            var m_top = event.touches[0].pageY - shift_Y;
+            var m_top = m_top - 50;
+            // Вычисление смещения курсора
+            t_colib = y_start-event.pageY;
+            $("#"+id).css('margin-top', m_top);
+        }, false);
+    }, false);
+
+    // Возврат списка, вышедшего за границы просмотра (touch)
+    element.addEventListener('touchend', function(e) {
+
+        var w_height   = $(window).height();
+        var w_r_height = (w_height-top)-bottom;
+        var l_top      = $("#"+id).offset().top;
+        var l_height   = $("#"+id).height();
+
+        var w_bottom   = w_height - bottom;
+        var l_razn     = l_height + l_top;
+        var wl_razn    = w_bottom - l_razn;
+
+        if(l_height < w_r_height && l_top > top){
+            $("#"+id).stop().animate({
+                marginTop: top
+            }, 350);
+        }
+
+        if(l_height < w_r_height && l_top < top){
+            $("#"+id).stop().animate({
+                marginTop: top
+            }, 350);
+        }
+
+        if(l_height > w_r_height && l_top > top){
+            $("#"+id).stop().animate({
+                marginTop: top
+            }, 350);
+        }
+
+        if(l_height > w_r_height && l_top < top && l_razn < w_bottom){
+            //alert(1);
+            $("#"+id).stop().animate({
+                marginTop: l_top+wl_razn
+            }, 350);
+        }
+
+    }, false);
+}
+
+var scroll_list_in_block = function(id, id_parent, top, bottom){
+    var element = document.getElementById(id);
+    //alert("hallo");
+    //alert($("#w_slide_panel").offset().top);
+    element.addEventListener('touchstart', function(event) {
+        var lcf_off		 = $("#"+id_parent).offset().top;
+        var sc_top       = $("#"+id).offset().top;
+        var shift_Y      = event.touches[0].pageY - sc_top;
+        // Стартовые координаты курсора при таче
+        var y_start      = event.pageY;
+        //alert("hallo");
+
+        element.addEventListener('touchmove', function(event) {
+            var m_top = event.touches[0].pageY - shift_Y;
+            var m_top = m_top - lcf_off;
+            // Вычисление смещения курсора
+            t_colib = y_start-event.pageY;
+            ////////////////////////////
+            //$("#right_c_field").html(t_colib);
+            //alert(lcf_off);
+            $("#"+id).css('margin-top', m_top);
+        }, false);
+    }, false);
+
+    // Возврат списка, вышедшего за границы просмотра (touch)
+    element.addEventListener('touchend', function(e) {
+
+        var w_height   = $("#"+id_parent).height();
+        var w_r_height = (w_height-top)-bottom;
+        var l_top      = $("#"+id).offset().top;
+        var l_height   = $("#"+id).height();
+
+        var w_bottom   = w_height - bottom;
+        var l_razn     = l_height + l_top;
+        var wl_razn    = w_bottom - l_razn;
+
+        if(l_height < w_r_height && l_top > top){
+            $("#"+id).stop().animate({
+                marginTop: top
+            }, 350);
+        }
+
+        if(l_height < w_r_height && l_top < top){
+            $("#"+id).stop().animate({
+                //marginTop: top
+            }, 350);
+        }
+
+        if(l_height > w_r_height && l_top > top){
+            $("#"+id).stop().animate({
+                //marginTop: top
+            }, 350);
+        }
+
+        if(l_height > w_r_height && l_top < top && l_razn < w_bottom){
+            //alert(1);
+            //$("#"+id).stop().animate({
+            //    marginTop: l_top+wl_razn
+            //}, 350);
+        }
+
+    }, false);
+}
+
+createMenu = function(){
+    // Запрет на перемещение окна
+    document.body.addEventListener('touchmove', function(event) {
+
+        if(!$(event.target).parents(".scrollable").length){
+            event.preventDefault();
+        }
+    }, false);
+    event_act_add();
+
+    ///////////////////////////////////////////////////////////////
+    //Touch functions
+    ///////////////////////////////////////////////////////////////
+    scroll_list('wtl_content',0,150);
+    scroll_list('wtl_content2',0,150);
+    scroll_list_in_block('wat_content', 'w_about_tab', 0,0);
+    scroll_list_in_block('waw_c', 'w_about_window', 0,0);
+    scroll_list_in_block('wtt_content', 'w_tasks_tab', 0,0);
+
+
+    //$(window).click(function(){cl2();});
+    //Размер окна слайд панели
+    $("#w_slide_panel").width($(window).width()/2);
+    $("#w_slide_panel2").width($(window).width()/2);
+    //correct_slide_panel("w_slide_panel",0);
+
+    //Размер окна слайд панели редактора схем
+    $("#s_slide_panel").width($(window).width()/2);
+    //correct_slide_panel("s_slide_panel",50);
+
+    c_resize_window("task_table",50,150,150);
+
+    c_resize("w_slide_panel","w_task_list",50,50,50);
+
+    c_resize("w_slide_panel2","w_task_list2",50,50,100);
+
+    c_resize_window("w_about_window",50,150,150);
+
+    c_resize("s_slide_panel","s_sp_content",50,50,120);
+
+    c_resize2("s_slide_panel","x-levelGraphs",50,0,200);
+
+//    // анимация корзины
+//    $("#trash").mouseenter(function(){
+//        $("#trash_field").css({"background":"#ececec"});
+//    });
+//    $("#trash").mouseleave(function(){
+//        $("#trash_field").css({"background":"#e0e0e0"});
+//    });
+
+    // функции при клике на поля ввода логина или пароля
+    $("#login").focus(function(){
+        $("#login").val("");
+        $("#login").unbind("focus");
+    });
+    $("#password").focus(function(){
+        $("#password").val("");
+        //$("#password").attr('type','password');
+        $("#password").unbind("focus");
+    });
+
+    // Разметка экрана, его размеры
+    var c_width    = $(window).width();
+    var c_height   = $(window).height();
+    // Размеры поля меню(блока плиток)
+    var m_width    = c_width - 100;
+    var m_height   = c_height - 300;
+    // Размер квадратной и прямоугольной плиток от высоты блока плиток
+    //alert(c_height);
+    var sq_block_height   = (m_height - 10)/2;
+    var sql_block_width   = m_width - (sq_block_height + 10);
+    //alert(sql_block_width);
+    //alert($(window).width());
+
+    // Подстановка размеров окна плиток
+    $("#w_field_tabs").width(m_width);
+    $("#w_field_tabs").height(m_height);
+    // Подстановка размеров плиток
+    $("#w_user_tab").width(sq_block_height);
+    $("#w_user_tab").height(sq_block_height);
+    $("#w_user_tab").css({"margin-top":0,"margin-left":0});
+
+    $("#w_tasks_tab").width(sq_block_height);
+    $("#w_tasks_tab").height(sq_block_height);
+    $("#w_tasks_tab").css({"margin-top":sq_block_height + 10,"margin-left":0});
+
+    $("#w_about_tab").width(sql_block_width);
+    $("#w_about_tab").height(m_height);
+    $("#w_about_tab").css({"margin-top":0,"margin-left":sq_block_height + 10});
+
+
+    // Изменение размеров при ресайзе
+    $(window).resize(function() {
+
+        //Размер окна слайд панели
+        //$("#w_slide_panel").width($(window).width()/2);
+        correct_slide_panel("w_slide_panel","0");
+        correct_slide_panel("w_slide_panel2","0");
+
+
+        //Размер окна слайд панели редактора схем
+        //$("#s_slide_panel").width($(window).width()/2);
+        correct_slide_panel("s_slide_panel","-50");
+
+        c_resize_window("task_table",50,150,150);
+
+        $("#task_table").empty();
+        create_table();
+
+        c_resize("w_slide_panel","w_task_list",50,50,50);
+
+        c_resize("w_slide_panel2","w_task_list2",50,50,100);
+
+        c_resize("s_slide_panel","s_sp_content",50,50,120);
+
+        // функции при клике на поля ввода логина или пароля
+        $("#login").focus(function(){
+            $("#login").val("");
+            $("#login").unbind("focus");
+        });
+        $("#password").focus(function(){
+            $("#password").val("");
+            //$("#password").attr('type','password');
+            $("#password").unbind("focus");
+        });
+        // Разметка экрана, его размеры
+        var c_width    = $(window).width();
+        var c_height   = $(window).height();
+        // Размеры поля меню(блока плиток)
+        var m_width    = c_width - 100;
+        var m_height   = c_height - 300;
+        // Размер квадратной и прямоугольной плиток от высоты блока плиток
+        //alert(c_height);
+        var sq_block_height   = (m_height - 10)/2;
+        var sql_block_width   = m_width - (sq_block_height + 10);
+        //alert(sql_block_width);
+        //alert($(window).width());
+
+        // Подстановка размеров окна плиток
+        $("#w_field_tabs").width(m_width);
+        $("#w_field_tabs").height(m_height);
+        // Подстановка размеров плиток
+        $("#w_user_tab").width(sq_block_height);
+        $("#w_user_tab").height(sq_block_height);
+        $("#w_user_tab").css({"margin-top":0,"margin-left":0});
+
+        $("#w_tasks_tab").width(sq_block_height);
+        $("#w_tasks_tab").height(sq_block_height);
+        $("#w_tasks_tab").css({"margin-top":sq_block_height + 10,"margin-left":0});
+
+        $("#w_about_tab").width(sql_block_width);
+        $("#w_about_tab").height(m_height);
+        $("#w_about_tab").css({"margin-top":0,"margin-left":sq_block_height + 10});
+
+
+    });
+
+
+}
+
+function correct_slide_panel(id,mLeft){
+    var left   = parseInt(mLeft);
+    var mLeftS = left+"px";
+    var w      = $(window).width()/2;
+    $("#"+id).width(w);
+    if($("#"+id).attr("class") == 'open'){
+        $("#"+id).css({"margin-left":"-"+w+"px"})
+    }
+}
+
+function c_resize(id_parent, id_child, m_left, m_top, m_bottom){
+
+    // Разметка экрана, его размеры
+    var c_width    = $("#"+id_parent).width();
+    var c_height   = $("#"+id_parent).height();
+    var md_left    = m_left*2;
+    var mh_top     = m_top + m_bottom;
+    var e_width    = c_width - md_left;
+    var e_height   = c_height - mh_top;
+
+    // Подстановка размеров окна плиток
+    $("#"+id_child).width(e_width);
+    $("#"+id_child).height(e_height);
+    $("#"+id_child).css({"margin-top":m_top,"margin-left":m_left});
+
+}
+
+function c_resize2(id_parent, id_child, m_left, m_top, m_bottom){
+
+    // Разметка экрана, его размеры
+    var c_width    = $("#"+id_parent).width();
+    var c_height   = $("#"+id_parent).height();
+    var md_left    = m_left*2;
+    var mh_top     = m_top + m_bottom;
+    var e_width    = c_width - md_left;
+    var e_height   = c_height - mh_top;
+
+    // Подстановка размеров окна плиток
+    $("#"+id_child).width(e_width);
+    //$("#"+id_child).css({"margin-top":m_top});
+
+}
+
+function c_resize_window(id_child, m_left, m_top, m_bottom){
+
+    // Разметка экрана, его размеры
+    var c_width    = $(window).width();
+    var c_height   = $(window).height();
+    // Размеры поля меню(блока плиток)
+    var md_left    = m_left*2;
+    var mh_top     = m_top + m_bottom;
+    var e_width    = c_width - md_left;
+    var e_height   = c_height - mh_top;
+
+    // Подстановка размеров окна плиток
+    $("#"+id_child).width(e_width);
+    $("#"+id_child).height(e_height);
+    $("#"+id_child).css({"margin-top":m_top,"margin-left":m_left});
+}
+
+function wheel(event, id_child, id_parent)
+{
+    alert(1);
+    var element = $("#"+id_child);
+    var parent  = $("#"+id_parent);
+
+    // Переменная, в которой будем хранить сдвиг
+    var wheelDelta = 0;
+
+    scroller = element;
+    //alert("hi");
+    // Шаг меню при прокрутке
+    var step = 300;
+    if (!event)
+    {
+        event = window.event;
+    }
+    if (event.wheelDelta)
+    {
+        // В IE и Opera при сдвиге колеса на один шаг event.wheelDelta принимает значение 120
+        // Значения сдвига в этих двух браузерах совпадают по знаку.
+        wheelDelta = event.wheelDelta/120;
+    }
+    else if (event.detail)
+    {
+        // В Mozilla, значение wheelDelta отличается по знаку от значения в IE.
+        // Сдвиг колеса на один шаг соответствует значению 3 параметра event.detail
+        wheelDelta = -event.detail/3;
+    }
+    // При скроллинге вверх wheelDelta > 0
+    // При скролинге вниз - wheelDelta < 0
+    if (wheelDelta)
+    {
+        wheelDelta = wheelDelta * 20;
+        /*var m_top = */
+        //var l_c_top = $("#left_c").offset().top;
+        var l_c_top = parseInt(element.css("margin-top"));
+        //alert(l_c_top);
+        element.css('margin-top', l_c_top+wheelDelta);
+    }
+
+    var lcf_offset = parent.offset().top;
+    var lc_offset  = element.offset().top;
+    var lcf_height = parent.height();
+    var lc_height  = element.height();
+    var lcf_h_sum  = lcf_offset + lcf_height;
+    var lc_h_sum   = lc_offset + lc_height;
+    var lcf_lc_r   = lcf_h_sum - lc_h_sum;
+    var lc_top     = lc_offset + lcf_lc_r;
+
+    //alert(lc_h_sum);
+
+    if(lcf_offset < lc_offset){
+        element.stop().animate({
+            marginTop: 0
+        }, 350);
+    }
+
+    if(lc_h_sum < lcf_h_sum && lcf_height < lc_height){
+        element.stop().animate({
+            marginTop: lc_top - lcf_offset
+        }, 350);
+    }
+
+
+    /*
+     // Убиваем событие (чтобы страница не скроллилась)
+     if (event.preventDefault)
+     {
+     event.preventDefault();
+     }
+     event.returnValue = false;
+     //blockEvent(event);
+     */
+}
+
+function hide_all(){
+    $("#w_auth").hide();
+    $("#w_social").hide();
+    $("#w_title").hide();
+    $("#w_field_tabs").hide();
+    $("#task_table").hide();
+    $("#s_slide_panel").hide();
+    $("#w_bk").hide();
+    $("#act_buttons").hide();
+    $("#home_but").hide();
+    $("#trash").hide();
+    $("#back_side").hide();
+    $("#trash_field").hide();
+    $("#back_link").css({'display':'none'});
+    cl_any('w_slide_panel2', '0', 3);
+    cl_any('w_slide_panel', '0', 3);
+}
+
+function ch_content_user(){
+    $("#w_user_tab").html('');
+}
+
+function put_href(element,text){
+    $("#"+element).attr({'href':text});
+}
+
+</script>
+
+</head>
+
+
+<body id="body_main" class="bg_menu">
+<div id="w_bk" style="display: none; position: absolute; width: 100%; height: 100%; z-index: 500; background: url('../img/back.png');"></div>
+<input id="anim" type="hidden" value="0"/>
+<a id="back_link" href="#" style="width: 50px; z-index: 1200; position: absolute; margin-top: 55px; height: 50px; display: none; background: url('../img/back_arrow.png');">
+</a>
+
+<div id="back_link2" style="width: 50px; z-index: 1200; cursor: pointer; position: absolute; margin-top: 55px; height: 50px; display: none; background: url('../img/back_arrow.png');">
+</div>
+<!-- Тутульные символы -->
+<div id="w_title">
+    Тренажер по схематизации
+</div>
+
+
+
+<!-- Социальные закладки -->
+<div id="w_social">
+    <div id="l_facebook"></div>
+    <div class="g_space_10"></div>
+    <div id="l_googleplus"></div>
+    <div class="g_space_10"></div>
+    <div id="l_twitter"></div>
+</div>
+
+<!--Главное окно (Авторизация)-->
+<div id="w_auth">
+    <div class="login_input_field">
+        <input id="login" type="text" class="m_input_field" value="Логин"/>
+    </div>
+    <div class="login_input_field">
+        <input id="password" type="password" class="m_input_field" value=""/>
+    </div>
+    <div>
+        <a id="l_enter" href="#menu" class="login_link">Вход</a>
+    </div>
+</div>
+
+<!--Главное окно (Главное меню)-->
+<div id="w_head_menu">
+    <!--Плитки пунктов меню-->
+
+</div>
+<!--About sc-->
+<div id="w_about_window" style="position: absolute; font-family: roboto-light; font-size: 14px; color: #fff; cursor: pointer; background: #313131; z-index: 1200; display: none; overflow: hidden;">
+    <div style="width: 100%; height: 20px; background: rgb(49, 49, 49); position: absolute; margin-top: 0; top: 0%;"></div>
+    <div style="width: 100%; height: 20px; background: rgb(49, 49, 49); position: absolute; margin-top: -20px; top: 100%;"></div>
+    <div id="waw_c" style="display: block; padding: 10px">
+        Задачи в тренажере - есть необходимый материал для освоения крайне важного навыка для современного управленца - схематизация.
+        Но освоить такой навык на тренажере за счет "бездумного" решения задач попросту не удастся.
+        Освоение навыка возможно за счет рефлексивного анализа и выделения способа такой работы как схематизация.
+        Размышляйте, задавайте вопросы и фиксируйте понятое и все у вас получиться.
+        Все задачи в рамках тренажера по схематизации разделяются по тематическим блокам и уровням сложности прохождения задач.
+        Успехов в освоении навыка схематизации!
+    </div>
+</div>
+
+<!--Панель плиток (Главное меню)-->
+<div id="w_field_tabs" style="position: absolute; z-index: 1000; display: none; margin-top: 150px; margin-left: 50px">
+    <!--Плитка (Пользователь)-->
+    <div id="w_user_tab" style="position: absolute; font-family: roboto-light; font-size: 14px; color: #fff; cursor: pointer; background: #00AEFF; z-index: 1000; display: block;  overflow: hidden;">
+        <div style="padding: 20px 20px 20px 20px;">
+            <div style="width: 100%">Пользователь</div>
+            <div id="wut_i" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: url('../img/user.png') no-repeat 50% 50%;"></div>
+            <div id="wut_c" style="width: 100%; display: none;">
+                <div style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: url('../img/user.png') no-repeat 100px 50%;"></div>
+                <div style="position: absolute; top: 20px; left: 250px; width: 100%; height: 100%;">
+                    Ф.И.О:  Петров И.И.
+                    <br>
+                    <br>
+                    <br>
+                    Контакты: Rus@gmail.com
+                    <br>
+                    <br>
+                    <br>
+                    Навык схемтизации:
+                </div>
+
+                <a href="#menu" style="top: 100%; position: absolute; margin-top: -55px; left: 100%; margin-left: -140px"><div style="padding: 10px 10px 10px 10px; border: 4px solid #fff; text-align: center; background: #444444; float: right; color: #fff; width: 100px; height: auto;">Редактировать</div></a>
+            </div>
+        </div>
+    </div>
+
+    <!--Плитка (Список задач)-->
+    <div id="w_tasks_tab" style="position: absolute; font-family: roboto-light; font-size: 14px; color: #fff; cursor: pointer; background: #aac900; z-index: 1000; display: block;">
+        <div id="tasks_close" style="position: absolute; display: none; left: 100%; margin-top: -10px; margin-left: -10px;  width: 20px; height: 20px; background: url('../img/close.png');"></div>
+        <div style="width: 100%; height: 100%; overflow: hidden;">
+        <div id="wtt_content" style="padding: 20px 20px 20px 20px;">
+            <div style="width: 100%">Задачи</div>
+            <div id="wtt_i" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: url('../img/tasks.png') no-repeat 50% 50%;"></div>
+            <div id="wtt_c" style="width: 100%; height: 100%; display: none;">
+                <br>
+                Задачи в тренажере - есть необходимый материал для освоения крайне важного навыка для современного управленца - схематизация.
+                Но освоить такой навык на тренажере за счет "бездумного" решения задач попросту не удастся.
+                Освоение навыка возможно за счет рефлексивного анализа и выделения способа такой работы как схематизация.
+                Размышляйте, задавайте вопросы и фиксируйте понятое и все у вас получиться.
+                Все задачи в рамках тренажера по схематизации разделяются по тематическим блокам и уровням сложности прохождения задач.
+                Успехов в освоении навыка схематизации!<br><br>
+                Уровни сложности задач:<br>
+                1 уровень – в задачах заранее выделены нужные смыслы и им присвоены соответствующие графемы.<br>
+                2 уровень – в задачах выделено несколько лишних смыслов, которым присвоены соответствующие графемы.<br>
+                3 уровень – в задачах выделено множество слов не обозначающих смыслы, а так же всем смыслам присвоены разные варианты графем.
+                <div id="wtt_border" style="position: absolute; display: block; top: 100%; margin-top: -70px; left:0%; width: 100%; height: 70px; background: #aac900"></div>
+                <a id="to_task_link" href="#task" style="top: 100%; position: absolute; margin-top: -55px; left: 100%; margin-left: -140px"><div style="padding: 10px 10px 10px 10px; border: 4px solid #fff; text-align: center; background: #444444; float: right; color: #fff; width: 100px; height: auto;">Список задач</div></a>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!--Плитка (О схематизации)-->
+    <div id="w_about_tab" style="position: absolute; font-family: roboto-light; font-size: 14px; color: #fff; cursor: pointer; background: #313131; z-index: 1000; display: block;">
+        <div id="about_close" style="position: absolute; display: none; left: 100%; margin-top: -10px; margin-left: -10px;  width: 20px; height: 20px; background: url('../img/close.png');"></div>
+        <div style="width: 100%; height: 100%; overflow: hidden;">
+        <div id="wat_content" style="padding: 20px 20px 20px 20px; ">
+            <div style="width: 100%">О схематизации</div>
+            <div id="wat_i" style="position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%; background: url('../img/about.png') no-repeat 50% 50%;"></div>
+            <div id="wat_c" style="width: 100%; display: none;">
+                <br>
+                Мы все умеем визуализировать информацию. Мы делаем это с помощью графиков, диаграмм, карт и других инструментов. Информация в визуальном виде может быть гораздо понятнее, чем текст. Даже простая таблица часто позволяет увидеть сразу то, что очень трудно понять из большого, подробного текста. Появился даже специальный термин «инфографика» для обозначения информации в графическом, наглядном виде.
+                <br><br>Изображение позволяет нам понять – быстро и точно – передаваемую информацию.
+                <br><br>Но обычно инфографика позволяет визуализировать только количественные и качественные данные. Схемы, в отличие от графиков, диаграмм и других распространенных инструментов, позволяют изобразить структуру объекта или внутреннюю логику процессов. Схематизация – это приемы визуализации смысла, сущности ситуации. Визуализировать, изобразить такой смысл – это значит обеспечить понимание всей ситуации сразу, целиком.
+                <br><br>Решая задачи этого тренажера, Вы освоите приемы схематизации разных бизнес (и не только бизнес) ситуаций, приемы выделения смысла в сложных текстах, технику организации понимания.
+
+                <div id="to_about_sc" style="z-index: 1100; top: 100%; position: absolute; margin-top: -55px; left: 100%; margin-left: -140px"><div style="padding: 10px 10px 10px 10px; border: 4px solid #fff; text-align: center; background: #444444; float: right; color: #fff; width: 100px; height: auto;">Подробнее</div></div>
+                <div id="wat_border" style="position: absolute; display: block; top: 100%; margin-top: -70px; left:0%; width: 100%; height: 70px; background: #313131"></div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!--Главное окно (Пользователь)-->
+<div id="w_user"></div>
+
+<!--Главное окно (Список задач)-->
+<div id="w_tasks"></div>
+
+<!--Главное окно (О схематизации)-->
+<div id="w_about_schematization"></div>
+
+<!--Главное окно (Окно игры)-->
+<div id="w_game"></div>
+
+<!-- Выдвижная панель -->
+<div id="w_slide_panel">
+    <div id="wsp_arrow" style="width: 50px; border-left: 1px solid rgb(199, 199, 199); position: absolute; cursor: pointer; height: 100%; background: url('../img/arrow_panel_w.png') no-repeat; background-position: -47px 50%;" ></div>
+
+    <div id= "w_task_list">
+        <div id="wtl_title"></div>
+        <div id="wtl_content" style="width: 100%; height: auto"></div>
+    </div>
+    <div style="position: absolute; top: 0px; height: 50px; width: 100%;"></div>
+    <div style="position: absolute; top: 100%; margin-top: -50px; height: 50px; width: 100%;"></div>
+</div>
+
+<div id="w_slide_panel2">
+    <div id="wsp_arrow2" style="width: 50px; position: absolute; border-left: 1px solid rgb(199, 199, 199); cursor: pointer; height: 100%; background: url('../img/arrow_panel_w.png') no-repeat; background-position: -47px 50%;" ></div>
+    <div id= "w_task_list2">
+        <div id="wtl_title2" style="width: 100%; height: auto"></div>
+        <div id="wtl_content2" style="width: 100%; height: auto"></div>
+    </div>
+    <div style="position: absolute; top: 0px; height: 50px; width: 100%;"></div>
+    <div style="position: absolute; top: 100%; margin-top: -50px; height: 50px; width: 100%;"></div>
+    <div id="wsp_border" style="position: absolute; display: block; top: 100%; margin-top: -95px; left:0%; width: 100%; height: 100px; background: #E0E0E0"></div>
+
+</div>
+
+<div id="info_butt"></div>
+<!-- Выдвижная панель редактора схем-->
+<div id="s_slide_panel">
+    <div id="ssp_arrow" style="border-left: 1px solid rgb(199, 199, 199); width: 50px; position: absolute; cursor: pointer; height: 100%; background: url('../img/arrow_panel.png') no-repeat; background-position: 0px 50%;" >
+    </div>
+
+    <div id="s_sp_content" style="">
+        <div id="act_buttons" style="height: 50px; width: 100%;">
+            <div id="task_but" href="" style="cursor: pointer; font-family: roboto-thin; margin-top: 12px; font-size: 26px; float:left; width: 50%; height: 50px;">
+                Задание
+            </div>
+            <div id="check_but" href="" style="cursor: pointer; font-family: roboto-thin; margin-top: 12px; font-size: 26px; float:left; text-align: right; width: 50%; height: 50px;">
+                Проверить
+            </div>
+        </div>
+        <div id="x-senses"  style="font-family: roboto-light; clear: both; display: none; height: 100%; overflow: hidden; z-index: 1500; right: 0; width: 100%; bottom: 0;  padding: 0px 0 0 0;">
+            <div id="x-text_area" class="scrollable" style="overflow: auto; height: 100%; line-height: 2; z-index: 1000">
+                <div style="font-size: 26px; float: left;">Задача:&nbsp;&nbsp;&nbsp;</div>
+                <div id="x-levelTitle" style="font-size: 26px"></div>
+                <div style="clear: both; width: 100%; height: 1px; background: #313131"></div>
+                <div style="font-size: 26px; clear: both;">Задание&nbsp;&nbsp;&nbsp;</div>
+                <div id="x-levelTask" style="border: 1px solid #C4C4C4; line-height: 1.5; background: #fff; padding: 5px 10px 5px 10px; text-align: justify;"></div>
+                <div style="font-size: 26px; clear: both;">Содержание&nbsp;&nbsp;&nbsp;</div>
+                <div id="x-levelText" style="border: 1px solid #C4C4C4; line-height: 1.5; background: #fff; padding: 5px 10px 5px 10px; text-align: justify;" class="senses"></div>
+            </div>
+
+            <div style="font-size: 26px; clear: both; margin-top: 10px;">Графемы&nbsp;&nbsp;&nbsp;</div>
+            <div id="x-levelGraphs" style="height:70px; width: 100%; z-index: 1000; position: absolute; margin-top: 10px; border: 1px solid #C4C4C4; background: #fff;"></div>
+
+        </div>
+        <div id="x-results"  style="line-height: 24px; font-family: roboto-light; display: none; overflow: hidden; height: 100%; z-index: 1500; right: 0; width: 100%; bottom: 0;  padding: 0px 0 0 0;">
+            <div id="api_results_list" style="height: 570px; overflow: auto; ">
+
+            </div>
+        </div>
+
+
+        <!--Редактор-->
+        <div id="x-editor" style="padding-bottom: 37px;  display: none; font-family: Roboto-light; font-size: 14px;">
+            <div style=" height: 100%; overflow-y: auto;overflow-x: hidden;" >
+                <div id="api_editor_data" ></div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div style="position: absolute; top: 100%; margin-top: -50px; height: 50px; width: 100%;">
+
+        <div id="api_editor_buttons" style="margin: 0 50px; display: none;">
+            <a class="st-button2" id="api_editor_preview" style="float:left" title="просмотр">view</a>
+            <a class="st-button2" id="api_editor_check" style="float:left" title="проверить">check</a>
+            <a class="st-button2" id="api_editor_save" style="float:right" >save</a>
+            <a class="st-button2" id="api_editor_edit" style="float:right">edit</a>
+            <a class="st-button2" id="api_editor_render" style="float:right">render</a>
+
+            <select id="api_levels_select" style="height: 28px;margin: 5px;width: 158px;"></select>
+            <a class="st-button2" id="api_editor_add" style="float:right">create</scheme></a>
+        </div>
+    </div>
+
+</div>
+
+<!-- Таблица -->
+<div id="task_table" style="display: none; overflow: hidden; font-family: roboto-light; font-size: 12px; color: #313131; z-index: 800; width: 660px; height: 300px; position: absolute;">
+
+</div>
+
+<!--
+<div id="home_but" style="display: none; color: #313131; font-family: roboto-thin; font-size: 34px; width: 300px; text-align: right; z-index: 800; cursor: pointer; position: absolute; left: 100%; margin-left: -360px; top: 100%; margin-top: -100px; height: 50px;">
+    Главная
+</div>
+-->
+
+<!--#############################################-->
+
+
+<!--Канвас-->
+<div id="canvas" style="position: absolute; width:100%; height:100%"></div>
+
+
+
+<!--Смыслы-->
+<!--
+<div id="x-senses" class="senses_box"  style="display: none; right: 0; top: 0; width: 400px; bottom: 0;  padding: 30px 0 0 0; overflow: hidden">
+    <div id="x-text_area" style="overflow: auto">
+        <div id="x-levelTitle"></div>
+        <div id="x-levelText" class="senses"></div>
+        <div id="x-levelTask"></div>
+    </div>
+    <div id="x-levelGraphs" style="height:70px; background:rgba(0,0,0,0.4)"></div>
+</div>
+-->
+<!--Слайды-->
+<div id="api_slides_counter" style="display: none;">
+    <div id="x-left">&lt;</div>
+    <div id="x-right">&gt;</div>
+    <div id="x-pages">
+        <span id="slide_current"></span>
+        /
+        <span id="slide_all"></span>
+    </div>
+</div>
+
+<div id="x-mainwindow" style="display: none">
+
+
+    <!--Регистрация-->
+    <div id="api_register">
+        <span style=" font-size: 20px; line-height: 28px; margin: 10px;">Регистрация</span>
+        <hr>
+
+        <label style="line-height: 25px;">Электронная почта (логин) :
+            <input style="position: absolute; left:200px;" id="reg_login" placeholder="E-mail" title="E-mail"  type="text" name="email"/>
+        </label><br/>
+        <label style="line-height: 25px;">Пароль :
+            <input style="position: absolute; left:200px;" id="reg_password" placeholder="Имя пользователя" title="password"  type="password" name="Пароль"/>
+        </label><br/>
+        <label style="line-height: 25px;">Куратор :
+            <input style="position: absolute; left:200px;" id="reg_curator" type="text" name="curator"/>
+        </label><br/>
+        <hr/>
+
+        <div style="left:200px; float: left;">Группа:</div>
+        <div style="margin-left: 180px;">
+            <label><input name="group" type="radio" id="reg_player" style="height: 20px; width: 20px;"/> Схематизатор</label><br>
+            <span>Может проходить игровые задачи</span><br>
+            <label><input name="group" type="radio" id="reg_groups" style="height: 20px; width: 20px;"/> Куратор</label><br>
+            <span>Могут назначать задачи игрокам, проверять их решения</span><br>
+            <label><input name="group" type="radio" id="reg_editor" style="height: 20px; width: 20px;"/> Редактор</label><br>
+            <span>Может создавать игровые задачи</span><br>
+            <label><input name="group" type="radio" id="reg_moderatr" style="height: 20px; width: 20px;"/> Модератор</label><br>
+            <span>Может смотреть все задачи, утверждать и править задачи</span><br>
+            <label><input name="group" type="radio" id="reg_administrator" style="height: 20px; width: 20px;"/> Администратор</label><br>
+            <span>Создание и удаление пользователей</span><br>
+            <label><input name="group" type="radio" id="reg_developer" style="height: 20px; width: 20px;"/> Разработчик</label><br>
+            <span>имеет права ко всем формам</span><br>
+        </div>
+
+        <hr/>
+        <a class="st-button disabled" href="#create" >Создать</a>
+    </div>
+
+
+    <!--Презентация-->
+    <div id="api_slides" class="slides"></div>
+
+    <!--Выбор задач-->
+    <div id="api_levels" style="display: none;">
+        <div id="api_levels_list" style="overflow: auto; "></div>
+    </div>
+
+    <!--Главная страница-->
+    <div id="api_main">
+        <div style="height: 300px">
+            <h1 style="margin-top: 0">Аккаунт</h1>
+            <div id="api_login">
+                <div>
+                    <input style="padding: 5px;width: 100px;" class='username' id="login" placeholder="Логин" title="Имя пользователя или E-mail" required type="text" name="email" autofocus="autofocus" tabindex="1"/>
+                    <input  style="padding: 5px;width: 100px;"  class="password" id="password"  placeholder="Пароль" title="Пароль" required type="password" name="password" tabindex="2"/>
+                </div>
+
+
+                <div class="remember_try_forgot" style="text-align: justify;">
+                    <label class="remember">
+                        <input type="checkbox" name="remember" value="1" tabindex="3">
+                        <span>Запомнить</span>
+                    </label>
+                </div>
+
+                <a class="st-button2" id="submit"      style="width:100px;float:right" tabindex="4">Войти</a>
+                <a class="st-button2" id="try"         style="width:100px;float:right">Попробовать!</a>
+                <a class="st-button2" href="#register" style="width:100px;float:right">Регистрация</a>
+
+            </div>
+            <div id="api_accaunt">
+                <div style="float:left; text-align: center">
+                    <img id="api_user_image"src="img/users/1211811759.png" height=150px width=150px />
+                    <p id="api_user_status">схематизатор</p>
+                                <span class="key">
+                                    <span id="api_user_solved">--</span> / <span id="api_user_available">--</span>
+                                </span>
+                </div>
+                <h2 id="api_user_name"></h2>
+                <p>
+                    But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.
+                </p>
+                <div class="st-button2 disabled"  style=" float:right;">Управление аккаунтом</div>
+                <div id="api_logout" class="st-button2" style="float:right">Выход</div>
+            </div>
+        </div>
+
+
+
+
+        <div style="height: 300px">
+            <!--<h1 style="margin-top: 0">Выбор задачи</h1>-->
+            <!--<div style="width:130px; height:180px;float:left">-->
+            <!--Последняя-->
+            <!--<scheme>{load: "levels/o_credit.lvl"}</scheme>-->
+            <!--&lt;!&ndash;<a class="st-button level-link" href="?level=f_website" style="float: left; width: 100px; margin: 4px">перейти</a>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div style="width:130px; height:180px; float:left">-->
+            <!--Случайная-->
+            <!--<scheme>{load:"levels/a_diller.lvl"}</scheme>-->
+            <!--&lt;!&ndash;<a class="st-button level-link" href="?level=a_diller" style="float: left; width: 100px; margin: 4px">перейти</a>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div style="width:130px; height:180px;float:left">Рекомендуемая-->
+            <!--<scheme>{load:"levels/a_diller.lvl"}</scheme>-->
+            <!--&lt;!&ndash;<a class="st-button level-link" href="?level=o_education3" style="float: left; width: 100px; margin: 4px">перейти</a>&ndash;&gt;-->
+            <!--</div>-->
+
+            <p> To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it?</p>
+            <a id="api_btn_levels" class="st-button2" href="#levels" style="float:right">Все задачи</a>
+        </div>
+
+        <div style="height: 135px">
+            <h1 style="margin-top: 0">О схематизации</h1>
+            <p>
+                No one rejects,
+                <scheme style="display: inline;height: 15px;width: 10px;">position</scheme>
+                <scheme style="display: inline;height: 15px;width: 10px;">position</scheme>
+                <scheme style="display: inline;height: 15px;width: 10px;">position</scheme>
+                <scheme style="display: inline;height: 15px;width: 20px;">{graph: "arrow",p1:[0,50],p2:[100,50]}</scheme>
+                <scheme style="display: inline;height: 15px;width: 10px;">
+                    {shape: "path",fill:"#f89938",stroke:"none",path:"M49.973,94.128C44.760999999999996,94.128,39.86,92.099,36.174,88.411L11.424,63.661C7.734,59.976,5.701,55.074,5.701,49.859C5.701,44.643,7.734,39.74,11.425,36.053000000000004L36.175,11.304000000000006C39.861,7.617000000000006,44.76,5.589000000000006,49.973,5.589000000000006C55.185,5.589000000000006,60.086,7.617000000000006,63.772999999999996,11.303000000000006L88.52199999999999,36.05500000000001C92.21199999999999,39.73800000000001,94.24699999999999,44.641000000000005,94.24699999999999,49.858000000000004C94.24699999999999,55.075,92.21299999999998,59.977000000000004,88.52099999999999,63.663000000000004L63.772,88.411C60.086,92.099,55.185,94.128,49.973,94.128L49.973,94.128Z"},
+                    {shape: "path",fill:"#3399ff",stroke:"none" , path:"M33.014,23.398C33.014,14.032,40.607,6.439,49.973,6.439C59.34,6.439,66.932,14.032,66.932,23.398C66.932,32.765,59.34,40.357,49.973,40.357C40.606,40.358,33.014,32.765,33.014,23.398"},
+                    {shape: "path",fill:"#333333",stroke:"none",path: "M93.816,61.314C96.046,57.943,97.24600000000001,53.994,97.24600000000001,49.859C97.24600000000001,44.288000000000004,95.07400000000001,39.053000000000004,91.13400000000001,35.121L64.707,8.691L64.69699999999999,8.701C60.92599999999999,4.924,55.71799999999999,2.5840000000000005,49.97199999999999,2.5840000000000005S39.019,4.925,35.249,8.702L35.24,8.692L8.813,35.118C4.872000000000001,39.055,2.7010000000000005,44.290000000000006,2.7010000000000005,49.859C2.7010000000000005,55.427,4.871,60.662000000000006,8.811,64.596L32.64,88.42500000000001C33.595,89.49700000000001,34.599000000000004,90.50000000000001,35.657000000000004,91.42200000000001C39.542,95.10300000000001,44.6,97.12700000000001,49.972,97.12700000000001C55.537,97.12700000000001,60.771,94.96000000000001,64.706,91.02300000000001L90.416,65.31400000000001C90.481,65.25000000000001,90.54599999999999,65.18400000000001,90.61099999999999,65.11900000000001L91.13199999999999,64.59900000000002C92.12499999999999,63.60800000000002,93.005,62.533000000000015,93.767,61.39200000000002C93.785,61.36700000000002,93.804,61.34300000000002,93.823,61.31800000000002L93.816,61.314ZM89.535,49.859C89.535,52.451,88.783,54.925000000000004,87.39099999999999,57.043C86.556,58.183,85.68499999999999,59.179,84.78699999999999,60.04L84.723,60.104C80.496,64.125,75.72,65.264,71.667,65.264C69.437,65.264,67.424,64.91799999999999,65.842,64.51899999999999C56.579,62.17899999999999,46.51,54.20799999999999,41.902,42.58299999999999C44.385,43.63199999999999,47.112,44.21199999999999,49.972,44.21199999999999C60.719,44.21199999999999,69.588,36.02499999999999,70.674,25.56199999999999L85.683,40.56999999999999C88.167,43.053,89.535,46.351,89.535,49.859ZM49.973,10.294C57.2,10.294,63.077,16.173000000000002,63.077,23.398C63.077,30.624,57.199,36.503,49.973,36.503C42.748,36.503,36.87,30.624000000000002,36.87,23.398C36.87,16.173,42.748,10.294,49.973,10.294ZM14.262,59.146C11.779,56.665,10.411000000000001,53.367000000000004,10.411000000000001,49.86C10.411000000000001,46.352,11.778000000000002,43.054,14.261000000000001,40.574L24.415,30.418999999999997C21.765,39.440999999999995,20.627,48.934999999999995,21.237,58.036C21.456,61.307,21.907999999999998,64.44500000000001,22.558,67.44L14.262,59.146ZM31.621,33.206C33.851,50.655,47.663,67.878,63.95399999999999,71.995C66.60799999999999,72.665,69.21,72.995,71.72699999999999,72.995C71.76299999999999,72.995,71.79999999999998,72.992,71.83599999999998,72.992L59.255999999999986,85.57300000000001C56.774999999999984,88.052,53.47799999999999,89.418,49.97199999999999,89.418C47.530999999999985,89.418,45.198999999999984,88.742,43.16699999999999,87.504L43.170999999999985,87.497C42.37099999999999,86.967,41.60899999999999,86.368,40.86799999999999,85.734C40.80999999999999,85.67699999999999,40.74799999999999,85.63,40.69099999999999,85.573L38.14899999999999,83.03099999999999C32.92199999999998,77.02999999999999,29.634999999999987,68.101,28.927999999999987,57.52099999999999C28.393,49.515,29.354,41.167,31.621,33.206"}
+                </scheme>
+
+                dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.
+            </p>
+            <a class="st-button2" style="float:right" href="#slides/bruno">Подробнее</a>
+        </div>
+        <div style="height: 135px">
+            <h1 style="margin-top: 0">SokratJS</h1>
+            <p>
+                Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure.
+            </p>
+            <a class="st-button2" style="float:right" href="#slides/specs">Подробнее </a>
+        </div>
+        <div style="height: 135px">
+            <h1 style="margin-top: 0">Графемы</h1>
+            <p>
+                But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
+            </p>
+            <a class="st-button2 disabled" style="float:right" href="#slides/graphs">Подробнее </a>
+        </div>
+        <div style="height: 190px">
+            <h1 style="margin-top: 0"> Инструкция</h1>
+
+            <ul class="text">
+                <li>Шаг 1: Выбрать задачу</li>
+                <li>Шаг 2: Выделить смыслы</li>
+                <li>Шаг 3: Собрать схему</li>
+                <li>Шаг 4: Проверить </li>
+            </ul>
+            <div class="st-button2 disabled" style="float:right">Подробнее</div>
+        </div>
+    </div>
+</div>
+
+<!--<a id="api_small">-->
+<!--<img id="api_user_image_small" height=30px width=30px style="float:left"/>-->
+<!--<div id="api_user_name_small" style="float: left;line-height: 30px;margin-left: 10px;">Аккаунт</div>-->
+<!--</a>-->
+
+<!--
+<div id="top_level_menu" style="display:none">
+    <scheme id="api_level_leave">   {name: "shape", shape: "back",fill: "90-#f00:5-#00f:95"}    </scheme>
+    <scheme id="api_level_check">   {name: "shape", shape: "check"}   </scheme>
+    <scheme id="api_level_senses">  {name: "shape", shape: "senses"}  </scheme>
+    <scheme id="api_level_delete">  {name: "shape", shape: "delete"}  </scheme>
+    <scheme id="api_level_edit" style="display:none">  {name: "shape", shape: "pencil"}  </scheme>
+</div>
+-->
+
+<div id="trash" style="display:none">
+</div>
+
+<div id="test" style="display: none">
+    <div id="x-debug"></div>
+    <input type="text" id="x-console"/>
+</div>
+
+</body>
+
+
+</html>
+
+
+
+<!--<div id="top_menu">-->
+<!--<a href="#">Главная</a>-->
+<!--<a href="#levels">Выбор уровня</a>-->
+<!--<a href="#slides/bruno">О схематизации</a>-->
+<!--<a href="#slides/specs">SokratJS</a>-->
+<!--</div>-->

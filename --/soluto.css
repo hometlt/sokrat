@@ -1,0 +1,23 @@
+
+h4{font: 20px Verdana ; color: #277efa; margin:5px}
+.info_div p{font: 12px Verdana ; text-align:justify; color:#57aefa; margin-left: 25px}
+
+.bubble{
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background: #add8e6;
+    position: absolute;
+    overflow: hidden;
+}
+p{
+    margin:5px;
+}
+.slides article{
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 15px;
+    padding: 10px
+}

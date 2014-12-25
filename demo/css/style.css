@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+body{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    line-height: 24px;
+    font-family: roboto-light;
+}
+
+
+.st-button2, .st-button {
+    display: block;
+    text-align: center;
+    /*padding:5px;*/
+    position:relative;
+    border: solid 0px black;
+    padding: 3px 5px;
+    float: left;
+
+    background-color: #313131;
+    font-family: Roboto-light;
+    font-size: 12px;
+    text-decoration:none;
+    color:#fff;
+    cursor: pointer;
+    margin: 5px;
+}
+/*############# Стили редактора схем #############*/
+.s_slide_panel.closed{
+    left: 100%;
+    margin-left: -35px;
+}
+.s_slide_panel .trigger{
+    margin-left: 0px;
+    border: solid grey;
+    border-width: 0 0 0 3px;
+    position: absolute;
+    height: 100%;
+    width: 50px;
+    left: 0;
+    background:
+        radial-gradient(rgba(0,0,0,.3) 15%, transparent 16%) 0 0,
+        radial-gradient(rgba(0,0,0,.3) 15%, transparent 16%) 8px 8px,
+        radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+        radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+    background-size:16px 16px;
+}
+#s_slide_panel,
+.s_slide_panel{
+    transition: 1s all;
+    position: absolute;
+    background: #e0e0e0;
+    width: 50%;
+    z-index: 10;
+    overflow: auto;
+    background: url("../img/back_slide.png");
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    padding: 40px 0;
+    z-index: 150;
+}
+
+.trash{
+    background: url("../img/trash.png") no-repeat;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: 0px;
+    bottom: 10px;
+    left: 10px;
+    z-index: 100;
+}
+#trash:hover{
+     background: url("../img/trash_h.png") no-repeat;
+ }
+
+
+/*################################################*/
+/*##################  шрифты  ####################*/
+/*################################################*/
+
+@font-face {
+    font-family: 'Roboto-Thin';
+    src: url('../../css/font-light.woff');
+url('font-light') format('woff'),
+font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto-Light';
+    src: url('../../css/font-light.woff');
+url('font-light.woff') format('woff'),
+font-weight: normal;
+    font-style: normal;
+}
+
+/*################################################*/
+
+/*################################################*/
+/*#############  Новое из sokrat.js ##############*/
+/*################################################*/
+
+#api_levels_list > div > div{
+    width: 100%;
+    height: auto;
+    float: left;
+    clear: both;
+    margin: 0px;
+    cursor: pointer;
+    font-size: 30px;
+    color: #fff;
+    font-family: roboto-thin;
+}
+#api_levels_list > div > div:hover{
+    background: #fff;
+    color: #313131;
+}
+
+#api_levels_list a{
+    width: 100%;
+    text-decoration: none;
+    color: #fff;
+}
+#api_levels_list a:hover{
+    color: #313131;
+}
+/*#################  Оповещения  #################*/
+
+.message {
+    background-color: #829400;
+    color: #313131;
+}
+
+.critical, .notice, .message, .warning, .system {
+    /*border-radius: 15px 15px 15px 15px;
+    box-shadow: 0 0 3px black, 0 0 5px white inset;*/
+    margin: 5px;
+    padding: 0 7px;
+    color: #fff;
+}
+
+.critical { }
+.notice {background-color: #fffc00;}
+.message {}
+.system {background-color: #00a8ff;}
+.warning {background-color: #fffc00}
+
+.critical {
+    background-color: #d60000;
+}
+
+
+/*################################################*/
+
+::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+
+
+/* Track */
+::-webkit-scrollbar-track {
+    margin: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #313131;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #313131;
+}
+
+#api_editor_data pre{
+    font-size: 14px;
+    padding: 10px;
+    line-height: 20px;
+    font-family: 'Droid Sans Mono', 'Courier New', monospace;
+    letter-spacing: -1px;
+}
+
+pre {
+    font-family: 'Droid Sans Mono', 'Courier New', monospace;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 5px 10px;
+    overflow: auto;
+    letter-spacing: -1px;
+
+    margin: 8px 0;
+
+    color: black;
+    background: white;
+    border: 1px solid rgb(224, 224, 224);
+    text-align: left;
+    overflow: auto;
+}
+
+#api_levels_select{
+
+}
+
+.senses span{
+    color: #008b8b;
+    padding: 0px;
+    cursor: pointer;
+    border-radius: 0px;
+    border: 0px solid transparent;
+}
+
+#x-levelText p{
+     text-indent: 20px;
+ }
+
+#x-levelTask p{
+    text-indent: 20px;
+}
+
+#x-levelGraphs{
+    height: 70px;
+    width: 100%;
+    margin-top: 0px;
+    border: 1px solid #C4C4C4;
+    line-height: 1.5;
+    background: #fff;
+    text-align: justify;
+}
